@@ -3,87 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Tech Pro: Hệ thống Giáo trình Tối ưu</title>
+    <title>E-TECH PRO 2026 | Hệ Thống Giáo Trình Thông Minh</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PH15MNTJ6 "></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PH15MNTJ6"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-8PH15MNTJ6 '); 
+      gtag('config', 'G-8PH15MNTJ6'); 
     </script>
 
     <style>
         :root { --sidebar-bg: #0f172a; --accent: #2563eb; --header-h: 60px; --success: #10b981; }
-        body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; overflow: hidden; }
+        
+        body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; overflow: hidden; color: #334155; }
 
-        /* Sidebar & Navigation */
+        /* SIDEBAR */
         #sidebar { width: 320px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; transition: 0.3s; z-index: 1001; }
         .sidebar-header { padding: 20px; background: #1e293b; border-bottom: 1px solid #334155; }
-        .user-badge { margin-top: 10px; font-size: 0.85rem; color: #94a3b8; }
+        .user-badge { margin-top: 10px; font-size: 0.85rem; color: #94a3b8; display: flex; justify-content: space-between; align-items: center; }
+        
         #menu-list { flex: 1; overflow-y: auto; padding: 10px; }
-        .menu-item { padding: 12px; margin-bottom: 5px; border-radius: 6px; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
-        .menu-item.active { background: var(--accent); }
+        .menu-item { padding: 12px; margin-bottom: 5px; border-radius: 6px; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); font-size: 0.9rem; border-left: 3px solid transparent; }
+        .menu-item:hover, .menu-item.active { background: var(--accent); border-left: 3px solid #fff; }
 
-        /* Content UI Tối ưu */
-        #main-view { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding-bottom: 50px; }
-        .content-card { background: white; width: 90%; max-width: 850px; padding: 40px; border-radius: 12px; margin: 30px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 80vh; line-height: 1.6; color: #334155; }
+        /* NỘI DUNG CHÍNH */
+        #main-view { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; position: relative; scroll-behavior: smooth; }
+        .content-card { background: white; width: 90%; max-width: 900px; padding: 50px; border-radius: 12px; margin: 30px auto; box-shadow: 0 4px 20px rgba(0,0,0,0.08); min-height: 80vh; }
         
+        h1 { color: #1e293b; font-size: 2.2rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; margin-top: 0; }
+        p { font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; }
+
         /* CÁC KHỐI KIẾN THỨC TỐI ƯU */
-        .box-definition { background: #eff6ff; border-left: 5px solid #2563eb; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
-        .box-warning { background: #fff7ed; border-left: 5px solid #f97316; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
-        .box-summary { background: #f0fdf4; border: 1px dashed #22c55e; padding: 15px; margin: 20px 0; border-radius: 8px; }
+        .box-definition { background: #eff6ff; border-left: 6px solid #2563eb; padding: 20px; margin: 25px 0; border-radius: 4px; }
+        .box-warning { background: #fff7ed; border-left: 6px solid #f97316; padding: 20px; margin: 25px 0; border-radius: 4px; }
+        .box-summary { background: #f0fdf4; border: 2px dashed #22c55e; padding: 20px; margin: 25px 0; border-radius: 10px; }
         
-        /* Hình ảnh & Bảng */
-        .content-card img { max-width: 100%; border-radius: 8px; margin: 20px auto; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .img-caption { text-align: center; font-style: italic; color: #64748b; font-size: 0.9rem; margin-top: -10px; }
-        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        table td, table th { border: 1px solid #e2e8f0; padding: 12px; }
-        table th { background: #f8fafc; }
+        /* BẢNG VÀ ẢNH */
+        table { width: 100%; border-collapse: collapse; margin: 25px 0; background: #fff; }
+        table th, table td { border: 1px solid #e2e8f0; padding: 15px; text-align: left; }
+        table th { background: #f8fafc; font-weight: bold; color: #0f172a; }
+        .content-card img { max-width: 100%; border-radius: 10px; margin: 30px auto; display: block; }
+        .img-caption { text-align: center; font-style: italic; color: #64748b; font-size: 0.95rem; margin-top: -15px; }
 
-        /* Nút Điều hướng Bài học */
-        .nav-controls { display: flex; justify-content: space-between; width: 90%; max-width: 850px; margin: 0 auto 40px; gap: 20px; }
-        .nav-btn { flex: 1; padding: 15px; border: none; border-radius: 8px; background: white; color: var(--accent); font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
-        .nav-btn:hover { background: var(--accent); color: white; }
-        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        /* ĐIỀU HƯỚNG BÀI HỌC */
+        .nav-controls { display: flex; justify-content: space-between; width: 90%; max-width: 900px; margin: 0 auto 50px; gap: 20px; }
+        .nav-btn { flex: 1; padding: 15px; border: none; border-radius: 10px; background: white; color: var(--accent); font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1rem; transition: 0.3s; }
+        .nav-btn:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
 
-        /* Auth & Mobile */
-        #login-box { position: fixed; inset: 0; background: rgba(15,23,42,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        /* CHẾ ĐỘ TRÌNH CHIẾU SIÊU TO (PROJECTOR MODE) */
+        body.presentation-mode #sidebar, body.presentation-mode .nav-controls { display: none !important; }
+        body.presentation-mode #main-view { background: #fff; padding: 0; }
+        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; margin: 0; border-radius: 0; padding: 60px 10%; overflow-y: auto; }
+        
+        body.presentation-mode h1 { font-size: 4rem; text-align: center; margin-bottom: 50px; }
+        body.presentation-mode p, body.presentation-mode li { font-size: 2.5rem; line-height: 1.6; }
+        body.presentation-mode .box-definition, body.presentation-mode .box-warning, body.presentation-mode .box-summary { padding: 40px; font-size: 2.5rem; }
+        body.presentation-mode table { font-size: 2rem; }
+
+        /* NÚT TRÌNH CHIẾU */
+        .btn-toggle-pres { position: fixed; top: 15px; right: 20px; z-index: 1002; padding: 12px 20px; border-radius: 50px; background: var(--accent); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+
+        /* AUTH BOX */
+        #login-box { position: fixed; inset: 0; background: #0f172a; z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        .login-card { background: white; padding: 40px; border-radius: 20px; width: 350px; text-align: center; }
+        .login-card input { width: 100%; padding: 12px; margin: 10px 0; border: 2px solid #e2e8f0; border-radius: 10px; box-sizing: border-box; font-size: 1rem; }
+
         @media (max-width: 768px) {
-            #sidebar { position: fixed; left: -320px; height: 100%; }
+            #sidebar { position: fixed; left: -320px; height: 100vh; }
             #sidebar.active { left: 0; }
-            .content-card { width: 95%; padding: 20px; }
+            .content-card { width: 95%; padding: 25px; }
         }
-        
-        /* Presentation Mode */
-        body.presentation-mode #sidebar { display: none; }
-        body.presentation-mode .nav-controls { display: none; }
-        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; margin: 0; border-radius: 0; justify-content: center; overflow: hidden; }
-        .viewer-frame { width: 100%; height: 75vh; border: none; }
     </style>
 </head>
 <body>
 
     <div id="login-box">
-        <div style="background:white; padding:40px; border-radius:15px; text-align:center; width:300px;">
-            <h2>ĐĂNG NHẬP</h2>
-            <input type="text" id="stu-name" placeholder="Tên học sinh..." style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
-            <input type="password" id="access-code" placeholder="Mã lớp..." style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px;">
-            <button onclick="login()" style="width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">VÀO HỌC</button>
+        <div class="login-card">
+            <h2 style="margin-top:0">E-TECH LOGIN</h2>
+            <input type="text" id="stu-name" placeholder="Họ tên học sinh...">
+            <input type="password" id="access-code" placeholder="Mã lớp (Ví dụ: CN2026)">
+            <button onclick="login()" style="width:100%; padding:14px; background:var(--accent); color:white; border:none; border-radius:10px; cursor:pointer; font-weight:bold; margin-top:10px;">VÀO HỌC</button>
         </div>
     </div>
 
     <div id="sidebar">
         <div class="sidebar-header">
-            <h3 style="margin:0">E-TECH PRO</h3>
+            <h2 style="margin:0; font-size:1.4rem">E-TECH PRO</h2>
             <div class="user-badge">
-                <i class="fas fa-user-circle"></i> <span id="user-display">---</span> 
-                <span onclick="logout()" style="text-decoration:underline; cursor:pointer; margin-left:10px; color:#f87171;">Thoát</span>
+                <span><i class="fas fa-user-circle"></i> <span id="user-display">---</span></span>
+                <i class="fas fa-sign-out-alt" onclick="logout()" style="cursor:pointer; color:#f87171"></i>
             </div>
         </div>
-        <div class="grade-select" style="padding:15px">
-            <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:10px; border-radius:5px;">
+        <div style="padding:15px">
+            <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:10px; border-radius:8px; border:none; font-weight:bold">
                 <option value="10">Công nghệ 10</option>
                 <option value="11">Công nghệ 11</option>
                 <option value="12">Công nghệ 12</option>
@@ -93,8 +108,8 @@
     </div>
 
     <div id="main-view">
-        <button onclick="togglePresentation()" style="position:fixed; top:20px; right:20px; z-index:1001; padding:10px 20px; border-radius:8px; background:var(--accent); color:white; border:none; cursor:pointer;">
-            <i class="fas fa-desktop"></i> TRÌNH CHIẾU
+        <button class="btn-toggle-pres" onclick="togglePresentation()">
+            <i class="fas fa-desktop"></i> TRÌNH CHIẾU (F11)
         </button>
 
         <div class="content-card" id="display">
@@ -118,21 +133,28 @@
         function login() {
             const name = document.getElementById('stu-name').value;
             const code = document.getElementById('access-code').value;
-            if(name && code === MASTER_CODE) {
+            if(name.trim() && code === MASTER_CODE) {
                 localStorage.setItem('student_name', name);
                 localStorage.setItem('is_auth', 'true');
-                location.reload();
-            } else { alert("Thông tin không đúng!"); }
+                initApp();
+            } else { alert("Tên hoặc mã truy cập không đúng!"); }
         }
 
         function logout() { localStorage.clear(); location.reload(); }
+
+        function initApp() {
+            document.getElementById('login-box').style.display = 'none';
+            document.getElementById('user-display').innerText = localStorage.getItem('student_name');
+            renderMenu();
+            showLesson(0);
+        }
 
         function renderMenu() {
             currentGrade = document.getElementById('grade-picker').value;
             const data = (currentGrade === "10") ? data10 : (currentGrade === "11") ? data11 : data12;
             document.getElementById('menu-list').innerHTML = data.map((l, i) => `
                 <div class="menu-item ${i === currentIndex ? 'active' : ''}" onclick="showLesson(${i})">
-                    ${l.title}
+                    ${i + 1}. ${l.title}
                 </div>
             `).join('');
         }
@@ -141,24 +163,29 @@
             currentIndex = index;
             const data = (currentGrade === "10") ? data10 : (currentGrade === "11") ? data11 : data12;
             const lesson = data[index];
-            const display = document.getElementById('display');
             
-            // Render nội dung
-            if(lesson.pdf) {
-                display.innerHTML = `<h1>${lesson.title}</h1><iframe src="${lesson.pdf}" class="viewer-frame"></iframe>`;
-            } else {
-                display.innerHTML = `<h1>${lesson.title}</h1><div class="article-body">${lesson.content}</div>`;
-            }
+            // Render nội dung bài học
+            document.getElementById('display').innerHTML = `
+                <h1>${lesson.title}</h1>
+                <div class="article-body">${lesson.content}</div>
+            `;
 
-            // Update UI
+            // Cập nhật nút điều hướng
             document.getElementById('nav-ui').style.display = 'flex';
             document.getElementById('prev-btn').disabled = (index === 0);
             document.getElementById('next-btn').disabled = (index === data.length - 1);
+            
+            // Cập nhật trạng thái menu
             document.querySelectorAll('.menu-item').forEach((m, i) => m.classList.toggle('active', i === index));
-            document.getElementById('main-view').scrollTop = 0;
+            
+            // Cuộn lên đầu
+            document.getElementById('main-view').scrollTo(0, 0);
 
-            // Tracking GA4
-            gtag('event', 'view_lesson', {'student': localStorage.getItem('student_name'), 'lesson': lesson.title});
+            // GA4 Tracking
+            gtag('event', 'view_lesson', {
+                'student': localStorage.getItem('student_name'),
+                'lesson_title': lesson.title
+            });
         }
 
         function changeLesson(step) {
@@ -169,11 +196,10 @@
             document.body.classList.toggle('presentation-mode');
         }
 
+        // Tự động đăng nhập nếu có dữ liệu cũ
         window.onload = () => {
-            if(localStorage.getItem('is_auth')) {
-                document.getElementById('login-box').style.display = 'none';
-                document.getElementById('user-display').innerText = localStorage.getItem('student_name');
-                renderMenu();
+            if(localStorage.getItem('is_auth') === 'true') {
+                initApp();
             }
         }
     </script>
