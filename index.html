@@ -3,20 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Tech: Hệ thống Giáo trình Công nghệ</title>
+    <title>E-Tech System: Giáo trình & Bài giảng Công nghệ</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root { --sidebar-bg: #0f172a; --accent: #3b82f6; --text-main: #1e293b; }
-        body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; }
+        body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; overflow: hidden; }
         
         /* Sidebar */
-        #sidebar { width: 320px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; box-shadow: 2px 0 10px rgba(0,0,0,0.2); }
+        #sidebar { width: 320px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; transition: 0.3s; z-index: 10; }
         .sidebar-header { padding: 25px; background: #1e293b; border-bottom: 1px solid #334155; }
         .grade-select { padding: 15px; }
-        select { width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }
-        
+        select { width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; background: white; }
         .search-box { padding: 0 15px 15px; }
-        #search-input { width: 100%; padding: 10px; border-radius: 6px; border: none; background: #334155; color: white; outline: none; }
+        #search-input { width: 100%; padding: 10px; border-radius: 6px; border: none; background: #334155; color: white; outline: none; box-sizing: border-box; }
 
         #menu-list { flex: 1; overflow-y: auto; padding: 10px; }
         .menu-item { 
@@ -25,40 +24,64 @@
             display: flex; align-items: center; gap: 10px;
         }
         .menu-item:hover { background: var(--accent); }
-        .menu-item.active { background: var(--accent); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .menu-item.active { background: var(--accent); font-weight: bold; }
 
         /* Main Content */
-        #main-view { flex: 1; padding: 40px; overflow-y: auto; display: flex; justify-content: center; }
-        .content-card { background: white; width: 100%; max-width: 850px; padding: 50px; border-radius: 12px; shadow: 0 10px 15px -3px rgba(0,0,0,0.1); height: fit-content; }
-        h1 { color: var(--sidebar-bg); border-bottom: 3px solid var(--accent); padding-bottom: 15px; margin-bottom: 25px; }
-        .article-body { line-height: 1.8; color: #475569; font-size: 1.1rem; }
-        img { max-width: 100%; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0; }
+        #main-view { flex: 1; padding: 40px; overflow-y: auto; position: relative; transition: 0.3s; }
+        .content-card { background: white; width: 100%; max-width: 850px; padding: 50px; border-radius: 12px; margin: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 80vh; }
+        
+        /* Chế độ Trình chiếu */
+        body.presentation-mode #sidebar { margin-left: -320px; }
+        body.presentation-mode #main-view { background: white; padding: 0; }
+        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; border-radius: 0; padding: 60px 10%; border: none; overflow-y: auto; }
+        body.presentation-mode h1 { font-size: 3.5rem; text-align: center; margin-bottom: 40px; }
+        .article-body.present { font-size: 1.8rem; line-height: 1.6; }
+
+        /* Nút điều khiển */
+        .btn-present { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer; z-index: 1001; font-weight: bold; }
+        #pen-controls { position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: none; gap: 10px; align-items: center; }
+        .tool-btn { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; background: #f1f5f9; }
+        
+        canvas#drawing-canvas { position: fixed; top: 0; left: 0; z-index: 1000; cursor: crosshair; }
+        img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
     </style>
 </head>
 <body>
 
     <div id="sidebar">
         <div class="sidebar-header">
-            <h2 style="margin:0; font-size: 1.2rem;"><i class="fas fa-microchip"></i> GIÁO TRÌNH CÔNG NGHỆ</h2>
+            <h2 style="margin:0; font-size: 1.1rem;"><i class="fas fa-chalkboard-teacher"></i> E-TECH BÀI GIẢNG</h2>
         </div>
         <div class="grade-select">
             <select id="grade-picker" onchange="renderMenu()">
-                <option value="10">Công nghệ 10 (Thiết kế)</option>
-                <option value="11">Công nghệ 11 (Cơ khí)</option>
-                <option value="12">Công nghệ 12 (Điện)</option>
+                <option value="10">Công nghệ 10</option>
+                <option value="11">Công nghệ 11</option>
+                <option value="12">Công nghệ 12</option>
             </select>
         </div>
         <div class="search-box">
-            <input type="text" id="search-input" placeholder="Tìm tên bài học..." onkeyup="filterMenu()">
+            <input type="text" id="search-input" placeholder="Tìm tên bài..." onkeyup="filterMenu()">
         </div>
         <div id="menu-list"></div>
     </div>
 
     <div id="main-view">
+        <canvas id="drawing-canvas" style="display:none;"></canvas>
+        
+        <button class="btn-present" onclick="togglePresentation()">
+            <i class="fas fa-desktop"></i> Chế độ bài giảng
+        </button>
+
+        <div id="pen-controls">
+            <button class="tool-btn" id="pen-toggle" onclick="togglePen()" title="Bút vẽ"><i class="fas fa-pen"></i></button>
+            <button class="tool-btn" onclick="clearCanvas()" title="Xóa bảng"><i class="fas fa-eraser"></i></button>
+            <input type="color" id="pen-color" value="#ff0000" title="Chọn màu">
+        </div>
+
         <div class="content-card" id="display">
-            <div style="text-align:center; color:#94a3b8; padding:100px 0;">
-                <i class="fas fa-book-reader fa-4x"></i>
-                <h3>Vui lòng chọn khối lớp và bài học</h3>
+            <div style="text-align:center; padding-top:100px; color:#94a3b8">
+                <i class="fas fa-mouse-pointer fa-3x"></i>
+                <h3>Chọn bài học để bắt đầu bài giảng</h3>
             </div>
         </div>
     </div>
@@ -68,45 +91,100 @@
     <script src="data12.js"></script>
 
     <script>
+        let isDrawing = false;
+        let penMode = false;
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+
         function renderMenu() {
-            const grade = document.getElementById('grade-picker').value;
-            // Xác định nguồn dữ liệu dựa trên giá trị chọn
-            const source = (grade === "10") ? data10 : (grade === "11") ? data11 : data12;
-            const list = document.getElementById('menu-list');
-            
-            list.innerHTML = source.map((lesson, index) => `
-                <div class="menu-item" onclick="showLesson('${grade}', ${index}, this)">
-                    <i class="fas fa-file-alt"></i> ${lesson.title}
+            const g = document.getElementById('grade-picker').value;
+            const data = (g === "10") ? data10 : (g === "11") ? data11 : data12;
+            document.getElementById('menu-list').innerHTML = data.map((l, i) => `
+                <div class="menu-item" onclick="showLesson('${g}', ${i}, this)">
+                    <i class="fas fa-file-alt"></i> ${l.title}
                 </div>
             `).join('');
-            
-            document.getElementById('search-input').value = ""; // Reset tìm kiếm
         }
 
-        function showLesson(grade, index, el) {
-            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+        function showLesson(g, i, el) {
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
             el.classList.add('active');
-
-            const source = (grade === "10") ? data10 : (grade === "11") ? data11 : data12;
-            const lesson = source[index];
-            
+            const data = (g === "10") ? data10 : (g === "11") ? data11 : data12;
+            const lesson = data[i];
+            const bodyClass = document.body.classList.contains('presentation-mode') ? 'present' : '';
             document.getElementById('display').innerHTML = `
                 <h1>${lesson.title}</h1>
-                <div class="article-body">${lesson.content}</div>
+                <div class="article-body ${bodyClass}">${lesson.content}</div>
             `;
-            // Cuộn lên đầu bài học
             document.getElementById('main-view').scrollTop = 0;
+            if(penMode) clearCanvas();
         }
 
         function filterMenu() {
-            const keyword = document.getElementById('search-input').value.toLowerCase();
+            const k = document.getElementById('search-input').value.toLowerCase();
             document.querySelectorAll('.menu-item').forEach(item => {
-                item.style.display = item.innerText.toLowerCase().includes(keyword) ? "flex" : "none";
+                item.style.display = item.innerText.toLowerCase().includes(k) ? "flex" : "none";
             });
         }
 
-        // Khởi tạo menu bài học đầu tiên
+        function togglePresentation() {
+            const isPres = document.body.classList.toggle('presentation-mode');
+            const btn = document.querySelector('.btn-present');
+            const ctrls = document.getElementById('pen-controls');
+            const artBody = document.querySelector('.article-body');
+
+            if (isPres) {
+                btn.innerHTML = '<i class="fas fa-times"></i> Thoát (Esc)';
+                ctrls.style.display = 'flex';
+                if(artBody) artBody.classList.add('present');
+            } else {
+                btn.innerHTML = '<i class="fas fa-desktop"></i> Chế độ bài giảng';
+                ctrls.style.display = 'none';
+                if(artBody) artBody.classList.remove('present');
+                disablePen();
+            }
+        }
+
+        function togglePen() {
+            penMode = !penMode;
+            const btn = document.getElementById('pen-toggle');
+            if (penMode) {
+                canvas.style.display = 'block';
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                canvas.style.pointerEvents = 'auto';
+                btn.style.background = '#ff0000'; btn.style.color = 'white';
+            } else {
+                disablePen();
+            }
+        }
+
+        function disablePen() {
+            penMode = false;
+            canvas.style.display = 'none';
+            canvas.style.pointerEvents = 'none';
+            const btn = document.getElementById('pen-toggle');
+            if(btn) { btn.style.background = '#f1f5f9'; btn.style.color = 'black'; }
+        }
+
+        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        canvas.addEventListener('mousedown', (e) => { if(!penMode) return; isDrawing = true; draw(e); });
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
+
+        function draw(e) {
+            if (!isDrawing || !penMode) return;
+            ctx.lineWidth = 4; ctx.lineCap = 'round';
+            ctx.strokeStyle = document.getElementById('pen-color').value;
+            ctx.lineTo(e.clientX, e.clientY);
+            ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(e.clientX, e.clientY);
+        }
+
+        window.onresize = () => { if(penMode) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } };
         window.onload = renderMenu;
+        document.addEventListener('keydown', (e) => { if(e.key === "Escape" && document.body.classList.contains('presentation-mode')) togglePresentation(); });
     </script>
 </body>
 </html>
