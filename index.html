@@ -31,47 +31,88 @@
         body { margin: 0; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg-site); color: var(--text-main); display: flex; height: 100vh; overflow: hidden; }
 
         /* SIDEBAR */
-        #sidebar { width: var(--sidebar-w); background: white; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; padding: 20px; }
+        #sidebar { width: var(--sidebar-w); background: white; border-right: 1px solid #e2e8f0; display: flex; flex-direction: column; padding: 20px; z-index: 100; }
         .logo { font-weight: 800; font-size: 1.4rem; color: var(--primary); letter-spacing: -1px; margin-bottom: 30px; display: flex; align-items: center; gap: 10px; }
         .user-info { background: #f1f5f9; padding: 12px; border-radius: var(--radius); margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; font-size: 0.9rem; }
         #menu-list { flex: 1; overflow-y: auto; }
-        .menu-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 10px; cursor: pointer; color: var(--text-sub); font-weight: 500; border-left: 3px solid transparent; font-size: 0.95rem; }
+        .menu-item { padding: 12px 15px; margin-bottom: 8px; border-radius: 10px; cursor: pointer; color: var(--text-sub); font-weight: 500; font-size: 0.95rem; }
         .menu-item:hover { background: #f1f5f9; color: var(--primary); }
         .menu-item.active { background: #eef2ff; color: var(--primary); border-left: 3px solid var(--primary); font-weight: 700; }
 
-        /* CONTENT AREA */
-        #main-view { flex: 1; overflow-y: auto; padding: 40px; display: flex; flex-direction: column; align-items: center; scroll-behavior: smooth; }
-        .content-card { background: white; width: 100%; max-width: 850px; padding: 60px; border-radius: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); min-height: 80vh; }
-        h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-top: 0; color: #0f172a; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; }
+        /* MAIN VIEW - QUAN TRỌNG ĐỂ XỬ LÝ CUỘN */
+        #main-view {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            scroll-behavior: smooth;
+            padding: 40px 20px;
+        }
 
-        /* FORMATTING FOR LESSONS */
-        .article-body ul { margin-bottom: 25px; padding-left: 20px; }
-        .article-body li { margin-bottom: 12px; font-size: 1.1rem; line-height: 1.6; }
-        .box-definition, .box-warning, .box-summary { padding: 25px; border-radius: var(--radius); margin: 30px 0; line-height: 1.7; font-size: 1.15rem; }
-        .box-definition { background: #eef2ff; color: #3730a3; border-left: 5px solid #4f46e5; }
+        .content-card {
+            background: white;
+            width: 100%;
+            max-width: 850px;
+            padding: 60px;
+            border-radius: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            /* Không đặt chiều cao cố định để nội dung đẩy nút xuống */
+        }
+
+        h1 { font-size: 2.5rem; font-weight: 700; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; margin-top: 0; }
+
+        /* ĐỊNH DẠNG NỘI DUNG BÀI HỌC */
+        .box-definition, .box-warning, .box-summary { padding: 25px; border-radius: var(--radius); margin: 30px 0; font-size: 1.15rem; line-height: 1.7; }
+        .box-definition { background: #eef2ff; color: #3730a3; border-left: 5px solid var(--primary); }
         .box-warning { background: #fff7ed; color: #9a3412; border-left: 5px solid #f97316; }
         .box-summary { background: #f0fdf4; color: #166534; border: 1px dashed #22c55e; }
-
-        /* TABLES */
-        table { width: 100%; border-collapse: collapse; margin: 30px 0; font-size: 1.05rem; background: #fff; }
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; }
         table th, table td { padding: 15px; border: 1px solid #e2e8f0; text-align: left; }
-        table th { background: #f8fafc; font-weight: 700; color: var(--primary); }
+        table th { background: #f8fafc; color: var(--primary); }
 
-        /* PRESENTATION MODE */
+        /* THANH ĐIỀU HƯỚNG NẰM DƯỚI BÀI HỌC (KHÔNG CỐ ĐỊNH) */
+        .nav-controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+            margin-bottom: 60px; /* Tạo khoảng trống cuối trang */
+            width: 100%;
+            max-width: 850px;
+        }
+        .nav-btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: var(--radius);
+            border: 1px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: var(--text-sub);
+        }
+        .nav-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: #f5f3ff; }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        /* NÚT TRÌNH CHIẾU */
         .btn-toggle-pres { position: fixed; top: 25px; right: 25px; z-index: 1002; padding: 12px 24px; border-radius: 100px; background: white; border: 1px solid #e2e8f0; cursor: pointer; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; align-items: center; gap: 8px; }
         .btn-toggle-pres.exit-mode { background: #ef4444; color: white; border: none; }
-        body.presentation-mode #sidebar, body.presentation-mode .nav-controls { display: none !important; }
-        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; border-radius: 0; padding: 80px 12%; overflow-y: auto; }
-        body.presentation-mode h1 { font-size: 4rem; text-align: center; }
-        body.presentation-mode p, body.presentation-mode li, body.presentation-mode td { font-size: 2.2rem; line-height: 1.5; }
 
-        /* NAV & LOGIN */
-        .nav-controls { display: flex; gap: 15px; margin-top: 30px; width: 100%; max-width: 850px; margin-bottom: 50px; }
-        .nav-btn { flex: 1; padding: 16px; border-radius: var(--radius); border: 1px solid #e2e8f0; background: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        /* TRÌNH CHIẾU */
+        body.presentation-mode #sidebar, body.presentation-mode .nav-controls { display: none !important; }
+        body.presentation-mode #main-view { padding: 0; background: white; }
+        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; border-radius: 0; padding: 80px 12%; box-shadow: none; overflow-y: auto; }
+        body.presentation-mode h1 { font-size: 4rem; text-align: center; }
+        body.presentation-mode p, body.presentation-mode li, body.presentation-mode td { font-size: 2.3rem; line-height: 1.5; }
+
+        /* LOGIN */
         #login-box { position: fixed; inset: 0; background: #f8fafc; z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .login-card { background: white; padding: 50px; border-radius: 24px; width: 400px; text-align: center; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
         .login-card input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #e2e8f0; border-radius: 12px; outline: none; }
-        .login-card button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; }
+        .login-card button { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -89,10 +130,10 @@
     <div id="sidebar">
         <div class="logo"><i class="fas fa-bolt"></i> E-TECH PRO</div>
         <div class="user-info">
-            <span style="font-weight:600;"><i class="fas fa-user-circle"></i> <span id="user-display">---</span></span>
+            <span><i class="fas fa-user-circle"></i> <span id="user-display">---</span></span>
             <i class="fas fa-power-off" onclick="logout()" style="cursor:pointer; color:#ef4444"></i>
         </div>
-        <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:25px; font-weight:600; cursor:pointer;">
+        <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:20px; font-weight:600; cursor:pointer; background:white;">
             <option value="10">Công nghệ 10</option>
             <option value="11">Công nghệ 11</option>
             <option value="12">Công nghệ 12</option>
@@ -102,10 +143,12 @@
 
     <div id="main-view">
         <button class="btn-toggle-pres" onclick="togglePresentation()"><i class="fas fa-expand"></i> TRÌNH CHIẾU</button>
+        
         <div class="content-card" id="display"></div>
+
         <div class="nav-controls" id="nav-ui" style="display:none;">
-            <button class="nav-btn" id="prev-btn" onclick="changeLesson(-1)">← Bài trước</button>
-            <button class="nav-btn" id="next-btn" onclick="changeLesson(1)">Bài tiếp theo →</button>
+            <button class="nav-btn" id="prev-btn" onclick="changeLesson(-1)"><i class="fas fa-arrow-left"></i> Bài trước</button>
+            <button class="nav-btn" id="next-btn" onclick="changeLesson(1)">Bài tiếp theo <i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 
@@ -114,7 +157,8 @@
     <script src="data/bai13_10.js"></script>
     <script src="data/bai14_10.js"></script>
     <script src="data/bai15_10.js"></script>
-    <script src="data/bai10_11.js"></script> <script src="config.js"></script>
+    <script src="data/bai10_11.js"></script>
+    <script src="config.js"></script>
 
     <script>
         let currentIndex = 0;
@@ -129,7 +173,7 @@
                 localStorage.setItem('is_auth', 'true');
                 initApp();
                 gtag('event', 'login', {'student_name': name});
-            } else { alert("Sai mã truy cập!"); }
+            } else { alert("Thông tin sai!"); }
         }
 
         function logout() { if(confirm("Đăng xuất?")) { localStorage.clear(); location.reload(); } }
@@ -146,7 +190,7 @@
             
             if (!data || data.length === 0) {
                 document.getElementById('menu-list').innerHTML = "<p style='padding:15px; color:var(--text-sub)'>Sắp ra mắt...</p>";
-                document.getElementById('display').innerHTML = "<h1>Sắp ra mắt</h1><p>Nội dung đang được cập nhật.</p>";
+                document.getElementById('display').innerHTML = "<h1>Sắp ra mắt</h1><p>Nội dung đang được soạn thảo.</p>";
                 document.getElementById('nav-ui').style.display = 'none';
                 return;
             }
@@ -165,7 +209,13 @@
             if (!data[index]) return;
             const lesson = data[index];
             
-            document.getElementById('display').innerHTML = `<h1>${lesson.title}</h1><div class="article-body">${lesson.content}</div>`;
+            // Cập nhật nội dung & thêm khoảng trống cuối để không bị che
+            document.getElementById('display').innerHTML = `
+                <h1>${lesson.title}</h1>
+                <div class="article-body">${lesson.content}</div>
+                <div style="height: 50px;"></div>
+            `;
+
             document.getElementById('nav-ui').style.display = 'flex';
             document.getElementById('prev-btn').disabled = (index === 0);
             document.getElementById('next-btn').disabled = (index === data.length - 1);
@@ -174,8 +224,8 @@
             const activeItem = document.getElementById(`menu-item-${index}`);
             if (activeItem) activeItem.classList.add('active');
             
+            // Cuộn lên đầu
             document.getElementById('main-view').scrollTo(0, 0);
-            gtag('event', 'view_lesson', {'student': localStorage.getItem('student_name'), 'lesson': lesson.title});
         }
 
         function changeLesson(step) { showLesson(currentIndex + step); }
@@ -185,7 +235,7 @@
             const btn = document.querySelector('.btn-toggle-pres');
             btn.innerHTML = isPres ? '<i class="fas fa-times"></i> THOÁT X' : '<i class="fas fa-expand"></i> TRÌNH CHIẾU';
             btn.classList.toggle('exit-mode', isPres);
-            if(isPres) document.querySelector('.content-card').scrollTop = 0;
+            if(isPres) document.getElementById('main-view').scrollTop = 0;
         }
 
         window.onload = () => { if(localStorage.getItem('is_auth') === 'true') initApp(); }
