@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-TECH PRO | Modern Learning</title>
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PH15MNTJ6 "></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PH15MNTJ6"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-8PH15MNTJ6 '); // Thay G-XXXXXXXXXX bằng mã thật của bạn
+      gtag('config', 'G-8PH15MNTJ6'); 
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
             overflow: hidden;
         }
 
-        /* SIDEBAR HIỆN ĐẠI */
+        /* SIDEBAR */
         #sidebar {
             width: var(--sidebar-w);
             background: white;
@@ -84,7 +84,7 @@
         .menu-item:hover { background: #f1f5f9; color: var(--primary); }
         .menu-item.active { background: #eef2ff; color: var(--primary); border-left: 3px solid var(--primary); font-weight: 700; }
 
-        /* VÙNG NỘI DUNG */
+        /* CONTENT AREA */
         #main-view {
             flex: 1;
             overflow-y: auto;
@@ -106,7 +106,7 @@
 
         h1 { font-size: 2.5rem; font-weight: 700; letter-spacing: -1px; margin-top: 0; color: #0f172a; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; }
 
-        /* BOX NỘI DUNG */
+        /* CÁC KHỐI NỘI DUNG SƯ PHẠM */
         .box-definition, .box-warning, .box-summary {
             padding: 25px;
             border-radius: var(--radius);
@@ -132,51 +132,40 @@
             cursor: pointer;
             font-weight: 600;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            display: flex; align-items: center; gap: 8px;
         }
-        .btn-toggle-pres:hover { transform: translateY(-2px); border-color: var(--primary); color: var(--primary); }
         .btn-toggle-pres.exit-mode { background: #ef4444; color: white; border: none; }
 
-        /* ĐIỀU HƯỚNG BÀI HỌC */
+        /* ĐIỀU HƯỚNG */
         .nav-controls {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            width: 100%;
-            max-width: 850px;
-            margin-bottom: 50px;
+            display: flex; gap: 15px; margin-top: 30px;
+            width: 100%; max-width: 850px; margin-bottom: 50px;
         }
         .nav-btn {
-            flex: 1;
-            padding: 16px;
-            border-radius: var(--radius);
-            border: 1px solid #e2e8f0;
-            background: white;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-sub);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            flex: 1; padding: 16px; border-radius: var(--radius);
+            border: 1px solid #e2e8f0; background: white; cursor: pointer;
+            font-weight: 600; color: var(--text-sub); display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .nav-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: #f5f3ff; }
         .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
-        /* CHẾ ĐỘ TRÌNH CHIẾU */
+        /* BẢNG & ẢNH */
+        table { width: 100%; border-collapse: collapse; margin: 30px 0; }
+        table th, table td { padding: 15px; border: 1px solid #e2e8f0; text-align: left; }
+        table th { background: #f8fafc; }
+        img { max-width: 100%; border-radius: var(--radius); margin: 30px 0; display: block; }
+
+        /* TRÌNH CHIẾU SIÊU TO */
         body.presentation-mode #sidebar, body.presentation-mode .nav-controls { display: none !important; }
         body.presentation-mode #main-view { padding: 0; background: white; }
         body.presentation-mode .content-card { 
             max-width: 100%; width: 100vw; height: 100vh; 
-            border-radius: 0; padding: 80px 12%; 
-            box-shadow: none; overflow-y: auto;
+            border-radius: 0; padding: 80px 12%; box-shadow: none; overflow-y: auto;
         }
         body.presentation-mode h1 { font-size: 4rem; text-align: center; }
-        body.presentation-mode p, body.presentation-mode li { font-size: 2.2rem; margin-bottom: 30px; line-height: 1.5; }
+        body.presentation-mode p, body.presentation-mode li { font-size: 2.5rem; margin-bottom: 30px; line-height: 1.5; }
 
-        /* ĐĂNG NHẬP */
+        /* AUTH */
         #login-box {
             position: fixed; inset: 0; background: #f8fafc;
             z-index: 9999; display: flex; align-items: center; justify-content: center;
@@ -189,19 +178,10 @@
             width: 100%; padding: 14px; margin: 10px 0;
             border: 1px solid #e2e8f0; border-radius: 12px; font-size: 1rem; outline: none;
         }
-        .login-card input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
         .login-card button {
             width: 100%; padding: 14px; background: var(--primary);
-            color: white; border: none; border-radius: 12px;
-            font-weight: 700; cursor: pointer; margin-top: 20px; font-size: 1rem;
+            color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 20px;
         }
-        .login-card button:hover { background: var(--primary-hover); }
-
-        /* TABLE & IMAGE */
-        table { width: 100%; border-collapse: collapse; margin: 30px 0; }
-        table th, table td { padding: 15px; border: 1px solid #e2e8f0; text-align: left; }
-        table th { background: #f8fafc; }
-        img { max-width: 100%; border-radius: var(--radius); margin: 30px 0; }
 
         @media (max-width: 768px) {
             #sidebar { position: fixed; left: -280px; z-index: 1001; height: 100vh; }
@@ -230,13 +210,12 @@
             <span style="font-weight:600;"><i class="fas fa-user-circle"></i> <span id="user-display">---</span></span>
             <i class="fas fa-power-off" onclick="logout()" style="cursor:pointer; color:#ef4444" title="Đăng xuất"></i>
         </div>
-        <div style="margin-bottom: 15px; font-size: 0.8rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px;">Chọn khối lớp</div>
-        <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:25px; font-weight:600; background:#fff; outline:none; cursor:pointer;">
+        <div style="margin-bottom: 10px; font-size: 0.8rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase;">Chọn khối lớp</div>
+        <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:25px; font-weight:600; background:#fff; cursor:pointer;">
             <option value="10">Công nghệ 10</option>
             <option value="11">Công nghệ 11</option>
             <option value="12">Công nghệ 12</option>
         </select>
-        <div style="margin-bottom: 10px; font-size: 0.8rem; font-weight: 700; color: var(--text-sub); text-transform: uppercase; letter-spacing: 1px;">Danh sách bài học</div>
         <div id="menu-list"></div>
     </div>
 
@@ -245,8 +224,7 @@
             <i class="fas fa-expand"></i> TRÌNH CHIẾU
         </button>
 
-        <div class="content-card" id="display">
-            </div>
+        <div class="content-card" id="display"></div>
 
         <div class="nav-controls" id="nav-ui" style="display:none;">
             <button class="nav-btn" id="prev-btn" onclick="changeLesson(-1)"><i class="fas fa-arrow-left"></i> Bài trước</button>
@@ -261,7 +239,7 @@
     <script>
         let currentIndex = 0;
         let currentGrade = "10";
-        const MASTER_CODE = "CN2026"; // Thay đổi mã lớp tại đây
+        const MASTER_CODE = "CN2026";
 
         function login() {
             const name = document.getElementById('stu-name').value;
@@ -270,38 +248,39 @@
                 localStorage.setItem('student_name', name);
                 localStorage.setItem('is_auth', 'true');
                 initApp();
-                // Báo cáo đăng nhập cho GA4
                 gtag('event', 'login', {'student_name': name});
             } else { alert("Thông tin đăng nhập không chính xác!"); }
         }
 
         function logout() { 
-            if(confirm("Bạn muốn đăng xuất?")) {
-                localStorage.clear(); 
-                location.reload(); 
-            }
+            if(confirm("Bạn muốn đăng xuất?")) { localStorage.clear(); location.reload(); }
         }
 
         function initApp() {
             document.getElementById('login-box').style.display = 'none';
             document.getElementById('user-display').innerText = localStorage.getItem('student_name');
-            renderMenu();
-            showLesson(0);
+            renderMenu(); // Tự động gọi showLesson(0) bên trong
         }
 
         function renderMenu() {
             currentGrade = document.getElementById('grade-picker').value;
             const data = (currentGrade === "10") ? data10 : (currentGrade === "11") ? data11 : data12;
+            
             document.getElementById('menu-list').innerHTML = data.map((l, i) => `
-                <div class="menu-item ${i === currentIndex ? 'active' : ''}" onclick="showLesson(${i})">
+                <div class="menu-item" id="menu-item-${i}" onclick="showLesson(${i})">
                     ${i + 1}. ${l.title}
                 </div>
             `).join('');
+
+            // Reset về bài đầu tiên mỗi khi đổi khối lớp
+            showLesson(0);
         }
 
         function showLesson(index) {
             currentIndex = index;
             const data = (currentGrade === "10") ? data10 : (currentGrade === "11") ? data11 : data12;
+            
+            if (!data[index]) return;
             const lesson = data[index];
             
             document.getElementById('display').innerHTML = `
@@ -313,13 +292,17 @@
             document.getElementById('prev-btn').disabled = (index === 0);
             document.getElementById('next-btn').disabled = (index === data.length - 1);
             
-            document.querySelectorAll('.menu-item').forEach((m, i) => m.classList.toggle('active', i === index));
+            // Cập nhật trạng thái Active trên Menu
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            const activeItem = document.getElementById(`menu-item-${index}`);
+            if (activeItem) activeItem.classList.add('active');
+            
             document.getElementById('main-view').scrollTo(0, 0);
 
-            // Báo cáo xem bài cho GA4
             gtag('event', 'view_lesson', {
                 'student_name': localStorage.getItem('student_name'),
-                'lesson_title': lesson.title
+                'lesson_title': lesson.title,
+                'grade': currentGrade
             });
         }
 
