@@ -1,22 +1,112 @@
-const data10 = [
-    { title: "Bài 1: Khái quát về công nghệ", content: "<h3>1. Khái niệm</h3><p>Công nghệ là các giải pháp kĩ thuật để giải quyết vấn đề.</p>" },
-    { title: "Bài 2: Hệ thống kĩ thuật", content: "<h3>Cấu trúc</h3><p>Đầu vào -> Xử lý -> Đầu ra.</p>" },
-    { title: "Bài 3: Cách mạng công nghiệp", content: "<h3>Lịch sử</h3><p>Từ hơi nước đến AI và Big Data.</p>" },
-    { title: "Bài 4: Công nghệ mới", content: "<h3>Xu thế</h3><p>Công nghệ Nano, in 3D, Robot thông minh.</p>" },
-    { title: "Bài 5: Đánh giá công nghệ", content: "<h3>Tiêu chí</h3><p>Hiệu quả, Kinh tế, Môi trường.</p>" },
-    { title: "Bài 6: Ngành nghề kĩ thuật", content: "<h3>Nghề nghiệp</h3><p>Kĩ sư điện, cơ khí, CNTT.</p>" },
-    { title: "Bài 7: Tiêu chuẩn bản vẽ kĩ thuật", content: "<h3>TCVN</h3><p>Khổ giấy, tỉ lệ, nét vẽ.</p>" },
-    { title: "Bài 8: Hình chiếu vuông góc", content: "<h3>Phương pháp</h3><p>Chiếu đứng, chiếu bằng, chiếu cạnh.</p>" },
-    { title: "Bài 9: Hình cắt và mặt cắt", content: "<h3>Ứng dụng</h3><p>Biểu diễn bên trong vật thể.</p>" },
-    { title: "Bài 10: Hình chiếu trục đo", content: "<h3>Thông số</h3><p>Hệ số biến dạng p, q, r.</p>" },
-    { title: "Bài 11: Hình chiếu phối cảnh", content: "<h3>Kiến trúc</h3><p>Điểm tụ và đường chân trời.</p>" },
-    { title: "Bài 12: Thiết kế kĩ thuật CAD", content: "<h3>Phần mềm</h3><p>Sử dụng AutoCAD và Solidworks.</p>" },
-    { title: "Bài 13: Quy trình thiết kế kĩ thuật", content: "<h3>Các bước</h3><p>Xác định -> Giải pháp -> Chế tạo mẫu.</p>" },
-    { title: "Bài 14: Lập hồ sơ kĩ thuật", content: "<h3>Tài liệu</h3><p>Bản vẽ chi tiết và hướng dẫn sử dụng.</p>" },
-    { title: "Bài 15: Chế tạo mẫu thực tế", content: "<h3>Thực hành</h3><p>Dùng máy in 3D tạo mẫu nhanh.</p>" },
-    { title: "Bài 16: Thử nghiệm sản phẩm", content: "<h3>Đánh giá</h3><p>Kiểm tra độ bền và công năng.</p>" },
-    { title: "Bài 17: Thẩm mỹ sản phẩm", content: "<h3>Thiết kế</h3><p>Màu sắc và kiểu dáng hài hòa.</p>" },
-    { title: "Bài 18: Dự án thiết kế 1", content: "<h3>Đề tài</h3><p>Thiết kế giá đỡ thông minh.</p>" },
-    { title: "Bài 19: Dự án thiết kế 2", content: "<h3>Đề tài</h3><p>Thiết kế hộp đựng đồ dùng.</p>" },
-    { title: "Bài 20: Ôn tập tổng kết", content: "<h3>Hệ thống</h3><p>Tóm tắt toàn bộ chương trình lớp 10.</p>" }
-];
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Tech: Hệ thống Giáo trình Công nghệ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --sidebar-bg: #0f172a; --accent: #3b82f6; --text-main: #1e293b; }
+        body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; }
+        
+        /* Sidebar */
+        #sidebar { width: 320px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; box-shadow: 2px 0 10px rgba(0,0,0,0.2); }
+        .sidebar-header { padding: 25px; background: #1e293b; border-bottom: 1px solid #334155; }
+        .grade-select { padding: 15px; }
+        select { width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }
+        
+        .search-box { padding: 0 15px 15px; }
+        #search-input { width: 100%; padding: 10px; border-radius: 6px; border: none; background: #334155; color: white; outline: none; }
+
+        #menu-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .menu-item { 
+            padding: 12px; margin-bottom: 5px; border-radius: 6px; cursor: pointer; 
+            transition: 0.2s; font-size: 0.9rem; background: rgba(255,255,255,0.05);
+            display: flex; align-items: center; gap: 10px;
+        }
+        .menu-item:hover { background: var(--accent); }
+        .menu-item.active { background: var(--accent); font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        #main-view { flex: 1; padding: 40px; overflow-y: auto; display: flex; justify-content: center; }
+        .content-card { background: white; width: 100%; max-width: 850px; padding: 50px; border-radius: 12px; shadow: 0 10px 15px -3px rgba(0,0,0,0.1); height: fit-content; }
+        h1 { color: var(--sidebar-bg); border-bottom: 3px solid var(--accent); padding-bottom: 15px; margin-bottom: 25px; }
+        .article-body { line-height: 1.8; color: #475569; font-size: 1.1rem; }
+        img { max-width: 100%; border-radius: 8px; margin: 20px 0; border: 1px solid #e2e8f0; }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <h2 style="margin:0; font-size: 1.2rem;"><i class="fas fa-microchip"></i> GIÁO TRÌNH CÔNG NGHỆ</h2>
+        </div>
+        <div class="grade-select">
+            <select id="grade-picker" onchange="renderMenu()">
+                <option value="10">Công nghệ 10 (Thiết kế)</option>
+                <option value="11">Công nghệ 11 (Cơ khí)</option>
+                <option value="12">Công nghệ 12 (Điện)</option>
+            </select>
+        </div>
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Tìm tên bài học..." onkeyup="filterMenu()">
+        </div>
+        <div id="menu-list"></div>
+    </div>
+
+    <div id="main-view">
+        <div class="content-card" id="display">
+            <div style="text-align:center; color:#94a3b8; padding:100px 0;">
+                <i class="fas fa-book-reader fa-4x"></i>
+                <h3>Vui lòng chọn khối lớp và bài học</h3>
+            </div>
+        </div>
+    </div>
+
+    <script src="data10.js"></script>
+    <script src="data11.js"></script>
+    <script src="data12.js"></script>
+
+    <script>
+        function renderMenu() {
+            const grade = document.getElementById('grade-picker').value;
+            // Xác định nguồn dữ liệu dựa trên giá trị chọn
+            const source = (grade === "10") ? data10 : (grade === "11") ? data11 : data12;
+            const list = document.getElementById('menu-list');
+            
+            list.innerHTML = source.map((lesson, index) => `
+                <div class="menu-item" onclick="showLesson('${grade}', ${index}, this)">
+                    <i class="fas fa-file-alt"></i> ${lesson.title}
+                </div>
+            `).join('');
+            
+            document.getElementById('search-input').value = ""; // Reset tìm kiếm
+        }
+
+        function showLesson(grade, index, el) {
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            el.classList.add('active');
+
+            const source = (grade === "10") ? data10 : (grade === "11") ? data11 : data12;
+            const lesson = source[index];
+            
+            document.getElementById('display').innerHTML = `
+                <h1>${lesson.title}</h1>
+                <div class="article-body">${lesson.content}</div>
+            `;
+            // Cuộn lên đầu bài học
+            document.getElementById('main-view').scrollTop = 0;
+        }
+
+        function filterMenu() {
+            const keyword = document.getElementById('search-input').value.toLowerCase();
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.style.display = item.innerText.toLowerCase().includes(keyword) ? "flex" : "none";
+            });
+        }
+
+        // Khởi tạo menu bài học đầu tiên
+        window.onload = renderMenu;
+    </script>
+</body>
+</html>
