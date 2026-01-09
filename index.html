@@ -3,54 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Tech System: Giáo trình & Bài giảng Công nghệ</title>
+    <title>E-Tech Pro: Giáo trình & Bài giảng PDF</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --sidebar-bg: #0f172a; --accent: #3b82f6; --text-main: #1e293b; }
+        :root { --sidebar-bg: #0f172a; --accent: #2563eb; }
         body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; overflow: hidden; }
         
         /* Sidebar */
         #sidebar { width: 320px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; transition: 0.3s; z-index: 10; }
-        .sidebar-header { padding: 25px; background: #1e293b; border-bottom: 1px solid #334155; }
+        .sidebar-header { padding: 20px; background: #1e293b; border-bottom: 1px solid #334155; text-align: center; }
         .grade-select { padding: 15px; }
-        select { width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; background: white; }
-        .search-box { padding: 0 15px 15px; }
-        #search-input { width: 100%; padding: 10px; border-radius: 6px; border: none; background: #334155; color: white; outline: none; box-sizing: border-box; }
-
+        select { width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }
         #menu-list { flex: 1; overflow-y: auto; padding: 10px; }
-        .menu-item { 
-            padding: 12px; margin-bottom: 5px; border-radius: 6px; cursor: pointer; 
-            transition: 0.2s; font-size: 0.9rem; background: rgba(255,255,255,0.05);
-            display: flex; align-items: center; gap: 10px;
-        }
-        .menu-item:hover { background: var(--accent); }
-        .menu-item.active { background: var(--accent); font-weight: bold; }
+        .menu-item { padding: 12px; margin-bottom: 5px; border-radius: 6px; cursor: pointer; transition: 0.2s; font-size: 0.9rem; background: rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; }
+        .menu-item:hover, .menu-item.active { background: var(--accent); }
 
-        /* Main Content */
-        #main-view { flex: 1; padding: 40px; overflow-y: auto; position: relative; transition: 0.3s; }
-        .content-card { background: white; width: 100%; max-width: 850px; padding: 50px; border-radius: 12px; margin: auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 80vh; }
+        /* Main View */
+        #main-view { flex: 1; position: relative; overflow-y: auto; display: flex; flex-direction: column; align-items: center; }
+        .content-card { background: white; width: 90%; max-width: 900px; padding: 40px; border-radius: 12px; margin: 40px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 80vh; z-index: 1; }
         
+        /* PDF Frame */
+        .pdf-container { width: 100%; height: 80vh; border: none; border-radius: 8px; }
+
         /* Chế độ Trình chiếu */
         body.presentation-mode #sidebar { margin-left: -320px; }
-        body.presentation-mode #main-view { background: white; padding: 0; }
-        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; border-radius: 0; padding: 60px 10%; border: none; overflow-y: auto; }
-        body.presentation-mode h1 { font-size: 3.5rem; text-align: center; margin-bottom: 40px; }
-        .article-body.present { font-size: 1.8rem; line-height: 1.6; }
+        body.presentation-mode #main-view { background: #fff; overflow: hidden; justify-content: center; }
+        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; margin: 0; border-radius: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: none; }
+        body.presentation-mode .article-body { font-size: 2.2rem; }
+        body.presentation-mode .pdf-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 998; border-radius: 0; }
 
-        /* Nút điều khiển */
-        .btn-present { position: fixed; top: 20px; right: 20px; padding: 10px 20px; background: var(--accent); color: white; border: none; border-radius: 5px; cursor: pointer; z-index: 1001; font-weight: bold; }
-        #pen-controls { position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); display: none; gap: 10px; align-items: center; }
-        .tool-btn { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; background: #f1f5f9; }
-        
+        /* Bút vẽ & Nút bấm */
+        .btn-present { position: fixed; top: 20px; right: 20px; padding: 12px 24px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; z-index: 1001; font-weight: bold; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        #pen-controls { position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: none; gap: 10px; }
+        .tool-btn { width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer; background: #f1f5f9; font-size: 1.2rem; }
         canvas#drawing-canvas { position: fixed; top: 0; left: 0; z-index: 1000; cursor: crosshair; }
-        img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
     </style>
 </head>
 <body>
 
     <div id="sidebar">
         <div class="sidebar-header">
-            <h2 style="margin:0; font-size: 1.1rem;"><i class="fas fa-chalkboard-teacher"></i> E-TECH BÀI GIẢNG</h2>
+            <h2 style="margin:0"><i class="fas fa-chalkboard"></i> E-TECH PRO</h2>
         </div>
         <div class="grade-select">
             <select id="grade-picker" onchange="renderMenu()">
@@ -59,9 +52,6 @@
                 <option value="12">Công nghệ 12</option>
             </select>
         </div>
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Tìm tên bài..." onkeyup="filterMenu()">
-        </div>
         <div id="menu-list"></div>
     </div>
 
@@ -69,19 +59,19 @@
         <canvas id="drawing-canvas" style="display:none;"></canvas>
         
         <button class="btn-present" onclick="togglePresentation()">
-            <i class="fas fa-desktop"></i> Chế độ bài giảng
+            <i class="fas fa-desktop"></i> TRÌNH CHIẾU
         </button>
 
         <div id="pen-controls">
-            <button class="tool-btn" id="pen-toggle" onclick="togglePen()" title="Bút vẽ"><i class="fas fa-pen"></i></button>
-            <button class="tool-btn" onclick="clearCanvas()" title="Xóa bảng"><i class="fas fa-eraser"></i></button>
-            <input type="color" id="pen-color" value="#ff0000" title="Chọn màu">
+            <button class="tool-btn" id="pen-toggle" onclick="togglePen()"><i class="fas fa-pen"></i></button>
+            <button class="tool-btn" onclick="clearCanvas()"><i class="fas fa-eraser"></i></button>
+            <input type="color" id="pen-color" value="#ff0000" style="border:none; width:30px; height:30px; cursor:pointer;">
         </div>
 
         <div class="content-card" id="display">
-            <div style="text-align:center; padding-top:100px; color:#94a3b8">
-                <i class="fas fa-mouse-pointer fa-3x"></i>
-                <h3>Chọn bài học để bắt đầu bài giảng</h3>
+            <div style="text-align:center; padding-top:100px;">
+                <i class="fas fa-file-pdf fa-4x" style="color: #e2e8f0;"></i>
+                <h3 style="color: #94a3b8;">Chọn bài giảng để bắt đầu</h3>
             </div>
         </div>
     </div>
@@ -91,8 +81,9 @@
     <script src="data12.js"></script>
 
     <script>
-        let isDrawing = false;
+        let currentLesson = null;
         let penMode = false;
+        let isDrawing = false;
         const canvas = document.getElementById('drawing-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -101,7 +92,7 @@
             const data = (g === "10") ? data10 : (g === "11") ? data11 : data12;
             document.getElementById('menu-list').innerHTML = data.map((l, i) => `
                 <div class="menu-item" onclick="showLesson('${g}', ${i}, this)">
-                    <i class="fas fa-file-alt"></i> ${l.title}
+                    <i class="fas ${l.pdf ? 'fa-file-pdf' : 'fa-file-alt'}"></i> ${l.title}
                 </div>
             `).join('');
         }
@@ -110,39 +101,24 @@
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
             el.classList.add('active');
             const data = (g === "10") ? data10 : (g === "11") ? data11 : data12;
-            const lesson = data[i];
-            const bodyClass = document.body.classList.contains('presentation-mode') ? 'present' : '';
-            document.getElementById('display').innerHTML = `
-                <h1>${lesson.title}</h1>
-                <div class="article-body ${bodyClass}">${lesson.content}</div>
-            `;
+            currentLesson = data[i];
+            
+            const display = document.getElementById('display');
+            if (currentLesson.pdf) {
+                display.innerHTML = `<h1>${currentLesson.title}</h1><iframe src="${currentLesson.pdf}" class="pdf-container"></iframe>`;
+            } else {
+                display.innerHTML = `<h1>${currentLesson.title}</h1><div class="article-body">${currentLesson.content}</div>`;
+            }
             document.getElementById('main-view').scrollTop = 0;
             if(penMode) clearCanvas();
         }
 
-        function filterMenu() {
-            const k = document.getElementById('search-input').value.toLowerCase();
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.style.display = item.innerText.toLowerCase().includes(k) ? "flex" : "none";
-            });
-        }
-
         function togglePresentation() {
             const isPres = document.body.classList.toggle('presentation-mode');
-            const btn = document.querySelector('.btn-present');
             const ctrls = document.getElementById('pen-controls');
-            const artBody = document.querySelector('.article-body');
-
-            if (isPres) {
-                btn.innerHTML = '<i class="fas fa-times"></i> Thoát (Esc)';
-                ctrls.style.display = 'flex';
-                if(artBody) artBody.classList.add('present');
-            } else {
-                btn.innerHTML = '<i class="fas fa-desktop"></i> Chế độ bài giảng';
-                ctrls.style.display = 'none';
-                if(artBody) artBody.classList.remove('present');
-                disablePen();
-            }
+            document.querySelector('.btn-present').innerHTML = isPres ? '<i class="fas fa-times"></i> THOÁT' : '<i class="fas fa-desktop"></i> TRÌNH CHIẾU';
+            ctrls.style.display = isPres ? 'flex' : 'none';
+            if (!isPres) disablePen();
         }
 
         function togglePen() {
@@ -150,21 +126,16 @@
             const btn = document.getElementById('pen-toggle');
             if (penMode) {
                 canvas.style.display = 'block';
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
+                canvas.width = window.innerWidth; canvas.height = window.innerHeight;
                 canvas.style.pointerEvents = 'auto';
                 btn.style.background = '#ff0000'; btn.style.color = 'white';
-            } else {
-                disablePen();
-            }
+            } else { disablePen(); }
         }
 
         function disablePen() {
-            penMode = false;
-            canvas.style.display = 'none';
-            canvas.style.pointerEvents = 'none';
-            const btn = document.getElementById('pen-toggle');
-            if(btn) { btn.style.background = '#f1f5f9'; btn.style.color = 'black'; }
+            penMode = false; canvas.style.display = 'none'; canvas.style.pointerEvents = 'none';
+            document.getElementById('pen-toggle').style.background = '#f1f5f9';
+            document.getElementById('pen-toggle').style.color = 'black';
         }
 
         function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
@@ -177,12 +148,10 @@
             if (!isDrawing || !penMode) return;
             ctx.lineWidth = 4; ctx.lineCap = 'round';
             ctx.strokeStyle = document.getElementById('pen-color').value;
-            ctx.lineTo(e.clientX, e.clientY);
-            ctx.stroke();
+            ctx.lineTo(e.clientX, e.clientY); ctx.stroke();
             ctx.beginPath(); ctx.moveTo(e.clientX, e.clientY);
         }
 
-        window.onresize = () => { if(penMode) { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } };
         window.onload = renderMenu;
         document.addEventListener('keydown', (e) => { if(e.key === "Escape" && document.body.classList.contains('presentation-mode')) togglePresentation(); });
     </script>
