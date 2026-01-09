@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>AR Hiro Demo</title>
-
-  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-  <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.2.1/aframe/build/aframe-ar.js"></script>
-</head>
-
-<body>
-  <a-scene embedded arjs="sourceType: webcam;">
-
-    <!-- GẮN HIRO -->
-    <a-marker preset="hiro">
-
-      <!-- VẬT THỂ -->
-      <a-box position="0 0.5 0" color="red"></a-box>
-
-    </a-marker>
-
-    <a-entity camera></a-entity>
-  </a-scene>
-</body>
-</html>
+const data10 = [
+    { title: "Bài 1: Khái quát về công nghệ", content: "<h3>1. Khái niệm</h3><p>Công nghệ là các giải pháp kĩ thuật để giải quyết vấn đề.</p>" },
+    { title: "Bài 2: Hệ thống kĩ thuật", content: "<h3>Cấu trúc</h3><p>Đầu vào -> Xử lý -> Đầu ra.</p>" },
+    { title: "Bài 3: Cách mạng công nghiệp", content: "<h3>Lịch sử</h3><p>Từ hơi nước đến AI và Big Data.</p>" },
+    { title: "Bài 4: Công nghệ mới", content: "<h3>Xu thế</h3><p>Công nghệ Nano, in 3D, Robot thông minh.</p>" },
+    { title: "Bài 5: Đánh giá công nghệ", content: "<h3>Tiêu chí</h3><p>Hiệu quả, Kinh tế, Môi trường.</p>" },
+    { title: "Bài 6: Ngành nghề kĩ thuật", content: "<h3>Nghề nghiệp</h3><p>Kĩ sư điện, cơ khí, CNTT.</p>" },
+    { title: "Bài 7: Tiêu chuẩn bản vẽ kĩ thuật", content: "<h3>TCVN</h3><p>Khổ giấy, tỉ lệ, nét vẽ.</p>" },
+    { title: "Bài 8: Hình chiếu vuông góc", content: "<h3>Phương pháp</h3><p>Chiếu đứng, chiếu bằng, chiếu cạnh.</p>" },
+    { title: "Bài 9: Hình cắt và mặt cắt", content: "<h3>Ứng dụng</h3><p>Biểu diễn bên trong vật thể.</p>" },
+    { title: "Bài 10: Hình chiếu trục đo", content: "<h3>Thông số</h3><p>Hệ số biến dạng p, q, r.</p>" },
+    { title: "Bài 11: Hình chiếu phối cảnh", content: "<h3>Kiến trúc</h3><p>Điểm tụ và đường chân trời.</p>" },
+    { title: "Bài 12: Thiết kế kĩ thuật CAD", content: "<h3>Phần mềm</h3><p>Sử dụng AutoCAD và Solidworks.</p>" },
+    { title: "Bài 13: Quy trình thiết kế kĩ thuật", content: "<h3>Các bước</h3><p>Xác định -> Giải pháp -> Chế tạo mẫu.</p>" },
+    { title: "Bài 14: Lập hồ sơ kĩ thuật", content: "<h3>Tài liệu</h3><p>Bản vẽ chi tiết và hướng dẫn sử dụng.</p>" },
+    { title: "Bài 15: Chế tạo mẫu thực tế", content: "<h3>Thực hành</h3><p>Dùng máy in 3D tạo mẫu nhanh.</p>" },
+    { title: "Bài 16: Thử nghiệm sản phẩm", content: "<h3>Đánh giá</h3><p>Kiểm tra độ bền và công năng.</p>" },
+    { title: "Bài 17: Thẩm mỹ sản phẩm", content: "<h3>Thiết kế</h3><p>Màu sắc và kiểu dáng hài hòa.</p>" },
+    { title: "Bài 18: Dự án thiết kế 1", content: "<h3>Đề tài</h3><p>Thiết kế giá đỡ thông minh.</p>" },
+    { title: "Bài 19: Dự án thiết kế 2", content: "<h3>Đề tài</h3><p>Thiết kế hộp đựng đồ dùng.</p>" },
+    { title: "Bài 20: Ôn tập tổng kết", content: "<h3>Hệ thống</h3><p>Tóm tắt toàn bộ chương trình lớp 10.</p>" }
+];
