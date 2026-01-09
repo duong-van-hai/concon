@@ -3,128 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Tech Pro: Hệ thống Giáo dục Thông minh</title>
+    <title>E-Tech Pro: Hệ thống Giáo trình Tối ưu</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3DFGHFDEF7"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PH15MNTJ6 "></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-3DFGHFDEF7'); 
+      gtag('config', 'G-8PH15MNTJ6 '); 
     </script>
 
     <style>
         :root { --sidebar-bg: #0f172a; --accent: #2563eb; --header-h: 60px; --success: #10b981; }
         body { display: flex; margin: 0; font-family: 'Inter', sans-serif; height: 100vh; background: #f1f5f9; overflow: hidden; }
 
-        /* Mobile Header */
-        #mobile-nav { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: var(--header-h); 
-            background: var(--sidebar-bg); color: white; align-items: center; padding: 0 20px; 
-            z-index: 1002; box-sizing: border-box;
-        }
-
-        /* Sidebar */
+        /* Sidebar & Navigation */
         #sidebar { width: 320px; background: var(--sidebar-bg); color: white; display: flex; flex-direction: column; transition: 0.3s; z-index: 1001; }
-        .sidebar-header { padding: 25px; background: #1e293b; border-bottom: 1px solid #334155; }
-        .user-badge { margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155; font-size: 0.85rem; color: #94a3b8; }
-        
-        .grade-select { padding: 15px; }
-        select { width: 100%; padding: 12px; border-radius: 6px; border: none; font-weight: bold; cursor: pointer; }
-        
+        .sidebar-header { padding: 20px; background: #1e293b; border-bottom: 1px solid #334155; }
+        .user-badge { margin-top: 10px; font-size: 0.85rem; color: #94a3b8; }
         #menu-list { flex: 1; overflow-y: auto; padding: 10px; }
         .menu-item { padding: 12px; margin-bottom: 5px; border-radius: 6px; cursor: pointer; transition: 0.2s; background: rgba(255,255,255,0.05); display: flex; align-items: center; gap: 10px; font-size: 0.9rem; }
-        .menu-item:hover, .menu-item.active { background: var(--accent); }
+        .menu-item.active { background: var(--accent); }
 
-        /* Main Content */
-        #main-view { flex: 1; position: relative; overflow-y: auto; display: flex; flex-direction: column; align-items: center; width: 100%; transition: 0.3s; }
-        .content-card { background: white; width: 90%; max-width: 900px; padding: 40px; border-radius: 12px; margin: 40px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 80vh; z-index: 1; box-sizing: border-box; }
-        .viewer-frame { width: 100%; height: 75vh; border: none; border-radius: 8px; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            #mobile-nav { display: flex; }
-            #sidebar { position: fixed; left: -320px; top: 0; height: 100%; }
-            #sidebar.active { left: 0; }
-            #main-view { padding-top: var(--header-h); }
-            .content-card { width: 95%; padding: 20px; margin: 15px auto; }
-        }
-
-        /* Presentation Mode */
-        body.presentation-mode { overflow: hidden; }
-        body.presentation-mode #sidebar, body.presentation-mode #mobile-nav { display: none; }
-        body.presentation-mode #main-view { background: #fff; overflow: hidden; justify-content: center; padding: 0; }
-        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; margin: 0; border-radius: 0; display: flex; flex-direction: column; justify-content: center; }
-        body.presentation-mode .viewer-frame { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 998; }
-
-        /* Floating Controls */
-        #overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
-        .btn-present { position: fixed; top: 20px; right: 20px; padding: 12px 20px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; z-index: 1001; font-weight: bold; }
-        #pen-controls { position: fixed; bottom: 20px; right: 20px; z-index: 1001; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 4px 20px rgba(0,0,0,0.3); display: none; gap: 10px; }
-        .tool-btn { width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer; background: #f1f5f9; }
-        canvas#drawing-canvas { position: fixed; top: 0; left: 0; z-index: 1000; cursor: crosshair; }
+        /* Content UI Tối ưu */
+        #main-view { flex: 1; overflow-y: auto; display: flex; flex-direction: column; align-items: center; padding-bottom: 50px; }
+        .content-card { background: white; width: 90%; max-width: 850px; padding: 40px; border-radius: 12px; margin: 30px auto; box-shadow: 0 4px 6px rgba(0,0,0,0.05); min-height: 80vh; line-height: 1.6; color: #334155; }
         
-        /* Auth UI */
-        #login-box { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15,23,42,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; }
-        .login-card { background: white; padding: 40px; border-radius: 15px; text-align: center; width: 320px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .login-card input { width: 100%; padding: 12px; margin-top: 15px; border: 2px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        /* CÁC KHỐI KIẾN THỨC TỐI ƯU */
+        .box-definition { background: #eff6ff; border-left: 5px solid #2563eb; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .box-warning { background: #fff7ed; border-left: 5px solid #f97316; padding: 15px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .box-summary { background: #f0fdf4; border: 1px dashed #22c55e; padding: 15px; margin: 20px 0; border-radius: 8px; }
+        
+        /* Hình ảnh & Bảng */
+        .content-card img { max-width: 100%; border-radius: 8px; margin: 20px auto; display: block; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .img-caption { text-align: center; font-style: italic; color: #64748b; font-size: 0.9rem; margin-top: -10px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        table td, table th { border: 1px solid #e2e8f0; padding: 12px; }
+        table th { background: #f8fafc; }
+
+        /* Nút Điều hướng Bài học */
+        .nav-controls { display: flex; justify-content: space-between; width: 90%; max-width: 850px; margin: 0 auto 40px; gap: 20px; }
+        .nav-btn { flex: 1; padding: 15px; border: none; border-radius: 8px; background: white; color: var(--accent); font-weight: bold; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.2s; }
+        .nav-btn:hover { background: var(--accent); color: white; }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        /* Auth & Mobile */
+        #login-box { position: fixed; inset: 0; background: rgba(15,23,42,0.98); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        @media (max-width: 768px) {
+            #sidebar { position: fixed; left: -320px; height: 100%; }
+            #sidebar.active { left: 0; }
+            .content-card { width: 95%; padding: 20px; }
+        }
+        
+        /* Presentation Mode */
+        body.presentation-mode #sidebar { display: none; }
+        body.presentation-mode .nav-controls { display: none; }
+        body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; margin: 0; border-radius: 0; justify-content: center; overflow: hidden; }
+        .viewer-frame { width: 100%; height: 75vh; border: none; }
     </style>
 </head>
 <body>
 
     <div id="login-box">
-        <div class="login-card">
-            <i class="fas fa-user-shield fa-4x" style="color:var(--accent); margin-bottom:15px;"></i>
-            <h2 style="margin:0">XÁC THỰC</h2>
-            <input type="text" id="stu-name" placeholder="Họ và Tên học sinh...">
-            <input type="password" id="access-code" placeholder="Mã lớp (Ví dụ: CN2026)">
-            <button onclick="login()" style="width:100%; padding:14px; background:var(--accent); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:20px;">VÀO HỆ THỐNG</button>
-            <p id="err" style="color:red; display:none; font-size:0.8rem; margin-top:10px;">Sai mã truy cập!</p>
+        <div style="background:white; padding:40px; border-radius:15px; text-align:center; width:300px;">
+            <h2>ĐĂNG NHẬP</h2>
+            <input type="text" id="stu-name" placeholder="Tên học sinh..." style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:8px;">
+            <input type="password" id="access-code" placeholder="Mã lớp..." style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ddd; border-radius:8px;">
+            <button onclick="login()" style="width:100%; padding:12px; background:var(--accent); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">VÀO HỌC</button>
         </div>
     </div>
-
-    <div id="mobile-nav">
-        <button onclick="toggleSidebar()" style="background:none; border:none; color:white; font-size:1.5rem;"><i class="fas fa-bars"></i></button>
-        <span style="margin-left:15px; font-weight:bold;">E-TECH PRO</span>
-    </div>
-
-    <div id="overlay" onclick="toggleSidebar()"></div>
 
     <div id="sidebar">
         <div class="sidebar-header">
-            <h3 style="margin:0">CÔNG NGHỆ 2026</h3>
+            <h3 style="margin:0">E-TECH PRO</h3>
             <div class="user-badge">
-                <i class="fas fa-user-check" style="color:var(--success)"></i> Đang học: <b id="user-display" style="color:white">---</b>
-                <br>
-                <span onclick="logout()" style="cursor:pointer; color:#f87171; text-decoration:underline; font-size:0.75rem;">(Đăng xuất)</span>
+                <i class="fas fa-user-circle"></i> <span id="user-display">---</span> 
+                <span onclick="logout()" style="text-decoration:underline; cursor:pointer; margin-left:10px; color:#f87171;">Thoát</span>
             </div>
         </div>
-        <div class="grade-select">
-            <select id="grade-picker" onchange="renderMenu()">
-                <option value="10">Lớp 10 (Thiết kế)</option>
-                <option value="11">Lớp 11 (Cơ khí)</option>
-                <option value="12">Lớp 12 (Điện)</option>
+        <div class="grade-select" style="padding:15px">
+            <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:10px; border-radius:5px;">
+                <option value="10">Công nghệ 10</option>
+                <option value="11">Công nghệ 11</option>
+                <option value="12">Công nghệ 12</option>
             </select>
         </div>
         <div id="menu-list"></div>
     </div>
 
     <div id="main-view">
-        <canvas id="drawing-canvas" style="display:none;"></canvas>
-        <button class="btn-present" onclick="togglePresentation()"><i class="fas fa-desktop"></i> TRÌNH CHIẾU</button>
-        
-        <div id="pen-controls">
-            <button class="tool-btn" id="pen-btn" onclick="togglePen()"><i class="fas fa-pen"></i></button>
-            <button class="tool-btn" onclick="clearCanvas()"><i class="fas fa-eraser"></i></button>
-            <input type="color" id="pen-color" value="#ff0000" style="width:30px; height:30px; border:none;">
-        </div>
+        <button onclick="togglePresentation()" style="position:fixed; top:20px; right:20px; z-index:1001; padding:10px 20px; border-radius:8px; background:var(--accent); color:white; border:none; cursor:pointer;">
+            <i class="fas fa-desktop"></i> TRÌNH CHIẾU
+        </button>
 
         <div class="content-card" id="display">
-            <div style="text-align:center; padding-top:100px; color:#94a3b8;">
-                <i class="fas fa-book-reader fa-4x"></i>
-                <p>Hãy chọn một bài học để bắt đầu</p>
             </div>
+
+        <div class="nav-controls" id="nav-ui" style="display:none;">
+            <button class="nav-btn" id="prev-btn" onclick="changeLesson(-1)"><i class="fas fa-chevron-left"></i> Bài trước</button>
+            <button class="nav-btn" id="next-btn" onclick="changeLesson(1)">Bài sau <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
@@ -133,115 +111,71 @@
     <script src="data12.js"></script>
 
     <script>
-        const MASTER_CODE = "CN2026"; // MÃ TRUY CẬP CỦA BẠN
-        let penActive = false, isDrawing = false;
-        const canvas = document.getElementById('drawing-canvas');
-        const ctx = canvas.getContext('2d');
+        let currentIndex = 0;
+        let currentGrade = "10";
+        const MASTER_CODE = "CN2026";
 
-        // QUẢN LÝ ĐĂNG NHẬP
         function login() {
             const name = document.getElementById('stu-name').value;
             const code = document.getElementById('access-code').value;
-            if(!name.trim()) return alert("Nhập tên học sinh!");
-            if(code !== MASTER_CODE) return document.getElementById('err').style.display='block';
-            
-            localStorage.setItem('student_name', name);
-            localStorage.setItem('is_auth', 'true');
-            initApp();
-            gtag('event', 'login', {'student_name': name});
+            if(name && code === MASTER_CODE) {
+                localStorage.setItem('student_name', name);
+                localStorage.setItem('is_auth', 'true');
+                location.reload();
+            } else { alert("Thông tin không đúng!"); }
         }
 
-        function logout() {
-            if(confirm("Bạn muốn đăng xuất?")) { localStorage.clear(); location.reload(); }
-        }
-
-        function initApp() {
-            document.getElementById('login-box').style.display = 'none';
-            document.getElementById('user-display').innerText = localStorage.getItem('student_name');
-            renderMenu();
-        }
-
-        // ĐIỀU KHIỂN GIAO DIỆN
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            const ov = document.getElementById('overlay');
-            ov.style.display = (ov.style.display === 'block') ? 'none' : 'block';
-        }
+        function logout() { localStorage.clear(); location.reload(); }
 
         function renderMenu() {
-            const g = document.getElementById('grade-picker').value;
-            const data = (g==="10") ? data10 : (g==="11") ? data11 : data12;
+            currentGrade = document.getElementById('grade-picker').value;
+            const data = (currentGrade === "10") ? data10 : (currentGrade === "11") ? data11 : data12;
             document.getElementById('menu-list').innerHTML = data.map((l, i) => `
-                <div class="menu-item" onclick="showLesson('${g}', ${i}, this)">
-                    <i class="fas ${l.slides ? 'fa-play-circle' : l.pdf ? 'fa-file-pdf' : 'fa-file-alt'}"></i> ${l.title}
+                <div class="menu-item ${i === currentIndex ? 'active' : ''}" onclick="showLesson(${i})">
+                    ${l.title}
                 </div>
             `).join('');
         }
 
-        function showLesson(g, i, el) {
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            el.classList.add('active');
-            const data = (g==="10") ? data10 : (g==="11") ? data11 : data12;
-            const lesson = data[i];
+        function showLesson(index) {
+            currentIndex = index;
+            const data = (currentGrade === "10") ? data10 : (currentGrade === "11") ? data11 : data12;
+            const lesson = data[index];
             const display = document.getElementById('display');
-
-            if(lesson.slides) {
-                display.innerHTML = `<h1>${lesson.title}</h1><iframe src="${lesson.slides}" class="viewer-frame" allowfullscreen></iframe>`;
-            } else if(lesson.pdf) {
+            
+            // Render nội dung
+            if(lesson.pdf) {
                 display.innerHTML = `<h1>${lesson.title}</h1><iframe src="${lesson.pdf}" class="viewer-frame"></iframe>`;
             } else {
                 display.innerHTML = `<h1>${lesson.title}</h1><div class="article-body">${lesson.content}</div>`;
             }
 
+            // Update UI
+            document.getElementById('nav-ui').style.display = 'flex';
+            document.getElementById('prev-btn').disabled = (index === 0);
+            document.getElementById('next-btn').disabled = (index === data.length - 1);
+            document.querySelectorAll('.menu-item').forEach((m, i) => m.classList.toggle('active', i === index));
+            document.getElementById('main-view').scrollTop = 0;
+
+            // Tracking GA4
             gtag('event', 'view_lesson', {'student': localStorage.getItem('student_name'), 'lesson': lesson.title});
-            if (window.innerWidth <= 768) toggleSidebar();
-            if(penActive) clearCanvas();
+        }
+
+        function changeLesson(step) {
+            showLesson(currentIndex + step);
         }
 
         function togglePresentation() {
-            const isPres = document.body.classList.toggle('presentation-mode');
-            document.getElementById('pen-controls').style.display = isPres ? 'flex' : 'none';
-            document.querySelector('.btn-present').innerHTML = isPres ? '<i class="fas fa-times"></i> THOÁT' : '<i class="fas fa-desktop"></i> TRÌNH CHIẾU';
-            if(!isPres) disablePen();
+            document.body.classList.toggle('presentation-mode');
         }
-
-        // BÚT VẼ TƯƠNG TÁC
-        function togglePen() {
-            penActive = !penActive;
-            const btn = document.getElementById('pen-btn');
-            if(penActive) {
-                canvas.style.display = 'block';
-                canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-                canvas.style.pointerEvents = 'auto';
-                btn.style.background = '#ef4444'; btn.style.color = 'white';
-            } else { disablePen(); }
-        }
-
-        function disablePen() {
-            penActive = false; canvas.style.display = 'none'; canvas.style.pointerEvents = 'none';
-            const btn = document.getElementById('pen-btn');
-            if(btn) { btn.style.background = '#f1f5f9'; btn.style.color = 'black'; }
-        }
-
-        function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-
-        canvas.addEventListener('mousedown', (e) => { if(!penActive) return; isDrawing = true; });
-        canvas.addEventListener('mousemove', (e) => {
-            if(!isDrawing || !penActive) return;
-            ctx.lineWidth = 4; ctx.lineCap = 'round';
-            ctx.strokeStyle = document.getElementById('pen-color').value;
-            ctx.lineTo(e.clientX, e.clientY); ctx.stroke();
-            ctx.beginPath(); ctx.moveTo(e.clientX, e.clientY);
-        });
-        canvas.addEventListener('mouseup', () => { isDrawing = false; ctx.beginPath(); });
 
         window.onload = () => {
-            if(localStorage.getItem('is_auth') === 'true') initApp();
+            if(localStorage.getItem('is_auth')) {
+                document.getElementById('login-box').style.display = 'none';
+                document.getElementById('user-display').innerText = localStorage.getItem('student_name');
+                renderMenu();
+            }
         }
-
-        document.addEventListener('keydown', (e) => {
-            if(e.key === "Escape" && document.body.classList.contains('presentation-mode')) togglePresentation();
-        });
     </script>
 </body>
 </html>
