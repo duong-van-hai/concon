@@ -13,7 +13,8 @@ const data10 = [
 
 // LỚP 11
 const data11 = [
-    bai10_11
+    bai10_11,
+    bai15_11
 ];
 
 // LỚP 12
