@@ -39,7 +39,7 @@
         .menu-item:hover { background: #f1f5f9; color: var(--primary); }
         .menu-item.active { background: #eef2ff; color: var(--primary); border-left: 3px solid var(--primary); font-weight: 700; }
 
-        /* MAIN VIEW - QUAN TRỌNG ĐỂ XỬ LÝ CUỘN */
+        /* MAIN VIEW */
         #main-view {
             flex: 1;
             overflow-y: auto;
@@ -57,7 +57,6 @@
             padding: 60px;
             border-radius: 24px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            /* Không đặt chiều cao cố định để nội dung đẩy nút xuống */
         }
 
         h1 { font-size: 2.5rem; font-weight: 700; border-bottom: 1px solid #f1f5f9; padding-bottom: 20px; margin-top: 0; }
@@ -71,12 +70,12 @@
         table th, table td { padding: 15px; border: 1px solid #e2e8f0; text-align: left; }
         table th { background: #f8fafc; color: var(--primary); }
 
-        /* THANH ĐIỀU HƯỚNG NẰM DƯỚI BÀI HỌC (KHÔNG CỐ ĐỊNH) */
+        /* THANH ĐIỀU HƯỚNG NẰM DƯỚI BÀI HỌC */
         .nav-controls {
             display: flex;
             gap: 15px;
             margin-top: 40px;
-            margin-bottom: 60px; /* Tạo khoảng trống cuối trang */
+            margin-bottom: 60px;
             width: 100%;
             max-width: 850px;
         }
@@ -136,7 +135,7 @@
         <select id="grade-picker" onchange="renderMenu()" style="width:100%; padding:12px; border-radius:10px; border:1px solid #e2e8f0; margin-bottom:20px; font-weight:600; cursor:pointer; background:white;">
             <option value="10">Công nghệ 10</option>
             <option value="11">Công nghệ 11</option>
-            <option value="12">Công nghệ 12</option>
+            <option value="12" selected>Công nghệ 12</option>
         </select>
         <div id="menu-list"></div>
     </div>
@@ -152,20 +151,209 @@
         </div>
     </div>
 
-    <script src="data/bai1_10.js"></script>
-    <script src="data/bai2_10.js"></script>
-    <script src="data/bai13_10.js"></script>
-    <script src="data/bai14_10.js"></script>
-    <script src="data/bai15_10.js"></script>
-    <script src="data/bai10_11.js"></script>
-    <script src="data/bai15_11.js"></script>
-    <script src="config.js"></script>
+    <!-- Giả lập dữ liệu lớp 10 và lớp 11 để tránh lỗi hệ thống khi chọn lớp -->
+    <script>
+        const data10 = [
+            { title: "Bài 1: Công nghệ và đời sống", content: "<p>Nội dung bài học lớp 10 đang được cập nhật...</p>" }
+        ];
+        const data11 = [
+            { title: "Bài 1: Khái quát về cơ khí chế tạo", content: "<p>Nội dung bài học lớp 11 đang được cập nhật...</p>" }
+        ];
+    </script>
 
+    <!-- Kịch bản chính chứa dữ liệu lớp 12 và toàn bộ Logic hệ thống -->
     <script>
         let currentIndex = 0;
-        let currentGrade = "10";
+        let currentGrade = "12";
         const MASTER_CODE = "CN2026";
 
+        // DỮ LIỆU TOÀN BỘ CHƯƠNG TRÌNH CÔNG NGHỆ 12
+        const data12 = [
+            // PHẦN MỘT: CÔNG NGHỆ ĐIỆN
+            {
+                title: "Bài 1: Giới thiệu tổng quan về kĩ thuật điện",
+                content: `<div class="box-definition"><strong>Khái niệm:</strong> Kĩ thuật điện là ngành khoa học kĩ thuật nghiên cứu ứng dụng năng lượng điện trường và từ trường vào các lĩnh vực sản xuất và đời sống xã hội.</div>
+                          <p><strong>1. Vai trò của kĩ thuật điện:</strong> Cung cấp năng lượng cho các ngành công nghiệp chế tạo, nông nghiệp CNC, giao thông vận tải thông minh (xe điện) và nâng cao tiện nghi sinh hoạt.</p>
+                          <p><strong>2. Triển vọng phát triển:</strong> Phát triển mạnh mẽ hệ thống lưới điện thông minh, tích hợp các nguồn năng lượng sạch (điện mặt trời, điện gió), hướng tới tối ưu và tự động hóa hệ thống phân phối.</p>`
+            },
+            {
+                title: "Bài 2: Ngành nghề trong lĩnh vực kĩ thuật điện",
+                content: `<p>Thị trường lao động ngành kĩ thuật điện rất đa dạng với các nhóm ngành nghề và công việc cốt lõi:</p>
+                          <table>
+                            <tr><th>Vị trí công việc</th><th>Nhiệm vụ chính yêu cầu</th></tr>
+                            <tr><td>Kĩ sư điện</td><td>Thiết kế sơ đồ, giám sát quá trình vận hành, tối ưu lưới điện.</td></tr>
+                            <tr><td>Kĩ thuật viên điện</td><td>Thực hiện bảo trì, sửa chữa máy biến áp, tủ phân phối.</td></tr>
+                            <tr><td>Thợ điện dân dụng</td><td>Thi công hệ thống điện tòa nhà, văn phòng, nhà xưởng quy mô nhỏ.</td></tr>
+                          </table>`
+            },
+            {
+                title: "Bài 3: Mạch điện xoay chiều ba pha",
+                content: `<div class="box-definition">Mạch điện xoay chiều 3 pha bao gồm nguồn điện 3 pha, đường dây truyền tải và tải tiêu thụ 3 pha.</div>
+                          <p><strong>Cách đấu nối hình Sao (Y) và Tam giác (Δ):</strong></p>
+                          <ul>
+                            <li><strong>Nối hình sao (Y):</strong> Dòng điện dây bằng dòng điện pha ($I_d = I_p$), điện áp dây bằng căn 3 lần điện áp pha ($U_d = \\sqrt{3}U_p$).</li>
+                            <li><strong>Nối hình tam giác (Δ):</strong> Điện áp dây bằng điện áp pha ($U_d = U_p$), dòng điện dây bằng căn 3 lần dòng điện pha ($I_d = \\sqrt{3}I_p$).</li>
+                          </ul>
+                          <div class="box-warning"><strong>Cảnh báo:</strong> Cần đấu nối đúng tải theo quy định điện áp định mức để tránh nguy cơ sụt áp hoặc cháy cuộn dây thiết bị.</div>`
+            },
+            {
+                title: "Bài 4: Hệ thống điện quốc gia",
+                content: `<div class="box-definition">Hệ thống điện quốc gia là một hệ thống hợp nhất bao gồm các khâu: Sản xuất (Nhà máy điện), Truyền tải (Đường dây cao thế, siêu cao thế), Phân phối và Tiêu thụ trên phạm vi toàn quốc dưới một sự điều độ thống nhất.</div>
+                          <p><strong>Vai trò:</strong> Đảm bảo cung cấp nguồn năng lượng điện an toàn, liên tục, ổn định cho nền kinh tế quốc dân và an ninh quốc phòng quốc gia.</p>`
+            },
+            {
+                title: "Bài 5: Sản xuất điện năng",
+                content: `<p>Điện năng hiện nay được sản xuất từ nhiều nguồn năng lượng thô khác nhau:</p>
+                          <ul>
+                            <li><strong>Nhiệt điện:</strong> Đốt nhiên liệu hóa thạch (than, khí đốt) sinh hơi nước làm quay tuabin máy phát.</li>
+                            <li><strong>Thủy điện:</strong> Khai thác thế năng dòng nước ở đập cao làm quay cánh tuabin.</li>
+                            <li><strong>Năng lượng tái tạo:</strong> Điện gió (turbin gió), điện mặt trời (tấm pin quang điện), năng lượng sinh khối...</li>
+                          </ul>`
+            },
+            {
+                title: "Bài 6: Mạng điện sản xuất quy mô nhỏ",
+                content: `<p>Mạng điện sản xuất quy mô nhỏ thường có công suất tiêu thụ dưới vài trăm kW, lấy điện từ lưới phân phối trung thế hoặc hạ thế.</p>
+                          <div class="box-summary"><strong>Đặc điểm:</strong> Tải tiêu thụ chủ yếu là các động cơ điện không đồng bộ ba pha, máy móc cơ khí, thiết bị chiếu sáng nhà xưởng. Đòi hỏi độ an toàn cao và hệ thống bảo vệ nghiêm ngặt.</div>`
+            },
+            {
+                title: "Bài 7: Mạng điện hạ áp dùng trong sinh hoạt",
+                content: `<p>Mạng điện hạ áp sinh hoạt trực tiếp cấp nguồn cho các hộ gia đình dân cư.</p>
+                          <p><strong>Thông số tiêu chuẩn tại Việt Nam:</strong> Điện áp dây định mức là 380V, điện áp pha là 220V, tần số lưới đạt 50Hz.</p>
+                          <p>Cấu trúc bao gồm: Đường dây hạ thế từ trạm biến áp $\\rightarrow$ Hộp công tơ $\\rightarrow$ Cáp tổng vào nhà $\\rightarrow$ Tủ phân phối trong nhà.</p>`
+            },
+            {
+                title: "Bài 8: Hệ thống điện trong gia đình",
+                content: `<p>Hệ thống điện gia đình cấu thành mạng lưới phân phối nội bộ phức tạp nhằm cấp điện cho các thiết bị sinh hoạt.</p>
+                          <div class="box-summary"><strong>Nguyên tắc thiết kế:</strong> Phải chia thành nhiều nhánh độc lập (Nhánh chiếu sáng, nhánh ổ cắm, nhánh thiết bị công suất lớn như điều hòa, bình nóng lạnh) để dễ dàng kiểm soát sự cố và sửa chữa.</div>`
+            },
+            {
+                title: "Bài 9: Thiết bị điện trong hệ thống điện gia đình",
+                content: `<p>Hệ thống bảo vệ và thiết bị đóng cắt thông dụng trong kiến trúc gia đình:</p>
+                          <table>
+                            <tr><th>Tên thiết bị</th><th>Công dụng chính</th></tr>
+                            <tr><td>MCB (Aptomat tép)</td><td>Bảo vệ hệ thống khi xảy ra hiện tượng quá tải hoặc ngắn mạch.</td></tr>
+                            <tr><td>RCCB / ELCB</td><td>Aptomat chống rò dòng, ngắt mạch ngay lập tức khi phát hiện người bị điện giật.</td></tr>
+                            <tr><td>Công tơ điện</td><td>Đo lượng năng lượng điện tiêu thụ theo chỉ số Kilowatt giờ (kWh).</td></tr>
+                          </table>`
+            },
+            {
+                title: "Bài 10: Thiết kế và lắp đặt mạch điện điều khiển trong gia đình",
+                content: `<p><strong>Các bước thiết kế cơ bản:</strong></p>
+                          <ol>
+                            <li>Xác định mục tiêu yêu cầu điều khiển (ví dụ: điều khiển bật tắt đèn hành lang thông minh).</li>
+                            <li>Lựa chọn giải pháp kỹ thuật và linh kiện (Cảm biến hồng ngoại, Rơ le trung gian).</li>
+                            <li>Xây dựng sơ đồ nguyên lý hoạt động và sơ đồ vị trí lắp đặt thực tế.</li>
+                            <li>Tiến hành gá lắp thiết bị, đấu dây và đo thông mạch trước khi cấp nguồn chạy thử.</li>
+                          </ol>`
+            },
+            {
+                title: "Bài 11: An toàn điện",
+                content: `<div class="box-warning"><strong>Nguy hiểm tính mạng:</strong> Dòng điện xoay chiều có cường độ trên 30mA chạy qua tim có thể gây co thắt lồng ngực và ngạt thở cấp tính.</div>
+                          <p><strong>Biện pháp phòng ngừa:</strong> Thực hiện nối đất bảo vệ toàn bộ vỏ kim loại của thiết bị điện. Sử dụng đồ bảo hộ chống dòng điện cách điện khi sửa chữa. Tuyệt đối không thao tác điện ở những khu vực ẩm ướt.</p>`
+            },
+            {
+                title: "Bài 12: Tiết kiệm điện năng",
+                content: `<div class="box-summary"><strong>Giải pháp thực tế:</strong> Thay thế các bóng đèn sợi đốt thế hệ cũ bằng hệ thống đèn LED hiệu suất cao. Ưu tiên mua sắm thiết bị có nhãn năng lượng Inverter biến tần. Xây dựng thói quen tắt nguồn thiết bị khi không có nhu cầu sử dụng.</div>`
+            },
+            // PHẦN HAI: CÔNG NGHỆ ĐIỆN TỬ
+            {
+                title: "Bài 13: Khái quát về kĩ thuật điện tử",
+                content: `<div class="box-definition"><strong>Định nghĩa:</strong> Kĩ thuật điện tử là ngành kĩ thuật dựa trên việc kiểm soát dòng chuyển động của các hạt điện tích (electron, lỗ trống) trong các chất bán dẫn để xử lý thông tin, tín hiệu hoặc biến đổi năng lượng điện.</div>
+                          <p>Điện tử hiện đại đóng vai trò hạt nhân lõi trong cuộc cách mạng số, viễn thông, IoT, Robot và trí tuệ nhân tạo.</p>`
+            },
+            {
+                title: "Bài 14: Ngành nghề và dịch vụ trong lĩnh vực kĩ thuật điện tử",
+                content: `<p>Các vị trí nghề nghiệp công nghệ cao đang đón đầu xu thế:</p>
+                          <ul>
+                            <li><strong>Kĩ sư thiết kế vi mạch:</strong> Thiết kế kiến trúc chip bán dẫn IC.</li>
+                            <li><strong>Kĩ sư vận hành dây chuyền SMT:</strong> Quản lý máy robot cắm linh kiện tự động lên bo mạch mạch in (PCB).</li>
+                            <li><strong>Chuyên viên sửa chữa bo mạch điện tử:</strong> Kiểm thử, chẩn đoán lỗi trên các module điều khiển công nghiệp.</li>
+                          </ul>`
+            },
+            {
+                title: "Bài 15: Điện trở, tụ điện và cuộn cảm",
+                content: `<p>Đây là 3 loại linh kiện thụ động nền tảng cấu thành mọi mạch điện tử:</p>
+                          <ul>
+                            <li><strong>Điện trở (R):</strong> Đại lượng đặc trưng cho sự cản trở dòng điện. Áp dụng công thức định luật Ohm: $I = \\frac{U}{R}$.</li>
+                            <li><strong>Tụ điện (C):</strong> Có khả năng tích lũy năng lượng điện trường, cho dòng điện xoay chiều (AC) vượt qua và chặn dòng một chiều (DC).</li>
+                            <li><strong>Cuộn cảm (L):</strong> Tích lũy năng lượng từ trường thông qua dòng điện chạy qua, cản trở mạnh mẽ dòng xoay chiều cao tần.</li>
+                          </ul>`
+            },
+            {
+                title: "Bài 16: Diode, transistor và mạch tích hợp IC",
+                content: `<p>Các cấu trúc cấu kiện bán dẫn chủ động:</p>
+                          <ul>
+                            <li><strong>Diode:</strong> Thiết bị bán dẫn có một tiếp giáp P-N, chỉ cho phép dòng điện đi qua theo chiều từ Anode sang Cathode (ứng dụng chỉnh lưu).</li>
+                            <li><strong>Transistor:</strong> Gồm 3 lớp bán dẫn tạo thành các cực (B, C, E hoặc G, D, S), hoạt động giống công tắc điện tử hoặc bộ khuếch đại dòng.</li>
+                            <li><strong>IC (Mạch tích hợp):</strong> Tập hợp siêu mật độ gồm hàng triệu transistor và điện trở trên một miếng silicon siêu nhỏ.</li>
+                          </ul>`
+            },
+            {
+                title: "Bài 17: Thực hành: Mạch phát hiện dòng điện xoay chiều trong dây dẫn",
+                content: `<p><strong>Mục tiêu:</strong> Thiết lập và lắp ráp mạch điện ứng dụng độ nhạy cảm ứng từ trường của Transistor trường (MOSFET) để phát hiện sự tồn tại của dòng điện AC xung quanh vỏ dây dẫn mà không cần tiếp xúc đồng lõi.</p>
+                          <div class="box-warning"><strong>Chú ý an toàn:</strong> Tuyệt đối không bóc lớp vỏ cách điện của dây nguồn 220V để thử nghiệm mạch trực tiếp.</div>`
+            },
+            {
+                title: "Bài 18: Giới thiệu về điện tử tương tự",
+                content: `<div class="box-definition"><strong>Điện tử tương tự (Analog):</strong> Là phân ngành xử lý các tín hiệu có biên độ biến thiên liên tục theo trục thời gian (Ví dụ: sóng âm thanh, dải nhiệt độ, ánh sáng tự nhiên).</div>
+                          <p>Mạch tương tự tiêu biểu: Mạch tiền khuếch đại âm thanh, mạch lọc nhiễu tần số cao âm tần.</p>`
+            },
+            {
+                title: "Bài 19: Khuếch đại thuật toán",
+                content: `<p>Bộ khuếch đại thuật toán (Op-Amp) là một mạch tích hợp IC analog có hệ số khuếch đại điện áp cực kì lớn, sở hữu hai ngõ vào tín hiệu đảo (-), không đảo (+) và một ngõ ra.</p>
+                          <div class="box-summary">Op-Amp được dùng làm phần tử cốt lõi trong các mạch tính toán đại số: Mạch cộng, mạch trừ tín hiệu, mạch so sánh điện áp tích hợp.</div>`
+            },
+            {
+                title: "Bài 20: Thực hành: Mạch khuếch đại đảo",
+                content: `<p>Sử dụng IC Op-Amp LM358 hoặc UA741 để tiến hành lắp đặt mạch khuếch đại đảo.</p>
+                          <p>Tín hiệu đưa vào ngõ vào đảo qua điện trở $R_1$, dòng hồi tiếp chạy qua điện trở hồi tiếp $R_f$.</p>
+                          <p><strong>Hệ số khuếch đại điện áp được tính bằng công thức:</strong> $K_{cl} = -\\frac{R_f}{R_1}$ (Dấu âm mang ý nghĩa điện áp ngõ ra ngược pha 180 độ so với tín hiệu ngõ vào).</p>`
+            },
+            {
+                title: "Bài 21: Tín hiệu số và các cổng logic cơ bản",
+                content: `<div class="box-definition"><strong>Tín hiệu số (Digital):</strong> Là tín hiệu chỉ rời rạc hóa ở hai mức trạng thái logic cố định: Mức logic cao (ký hiệu số 1) và Mức logic thấp (ký hiệu số 0).</div>
+                          <p>Các cổng logic cơ sở xây dựng hệ thống nhị phân:</p>
+                          <ul>
+                            <li><strong>Cổng AND (VÀ):</strong> Đầu ra chỉ bằng 1 khi mọi trạng thái đầu vào đồng thời bằng 1.</li>
+                            <li><strong>Cổng OR (HOẶC):</strong> Đầu ra bằng 1 khi có ít nhất một ngõ vào nhận mức 1.</li>
+                            <li><strong>Cổng NOT (ĐẢO):</strong> Đảo trạng thái đầu ra ngược hoàn toàn với đầu vào.</li>
+                          </ul>`
+            },
+            {
+                title: "Bài 22: Một số mạch xử lí tín hiệu trong điện tử số",
+                content: `<p>Giới thiệu cấu trúc tổ hợp các khối mạch xử lý dữ liệu số tinh vi:</p>
+                          <ul>
+                            <li><strong>Mạch giải mã:</strong> Chuyển mã nhị phân từ chip điều khiển thành mã hiển thị Led 7 đoạn.</li>
+                            <li><strong>Mạch đếm:</strong> Tích lũy số lượng các chu kỳ xung clock kích hoạt ở ngõ vào đầu dữ liệu.</li>
+                            <li><strong>Mạch chốt dữ liệu (Flip-Flop):</strong> Lưu trữ 1 bit thông tin trạng thái tĩnh nhị phân.</li>
+                          </ul>`
+            },
+            {
+                title: "Bài 23: Thực hành: Lắp ráp, kiểm tra mạch báo cháy sử dụng các cổng logic cơ bản",
+                content: `<p><strong>Sơ đồ giải pháp lắp ráp:</strong> Kết hợp một IC cảm biến nhiệt độ hệ thống với cổng logic VÀ (AND). Khi cảm biến nhiệt độ đạt ngưỡng báo động (Logic 1) kết hợp với công tắc kích hoạt hệ thống bật (Logic 1), đầu ra cổng AND lập tức nhảy lên mức 1 kích dòng qua khóa bán dẫn bật còi báo cháy.</p>`
+            },
+            {
+                title: "Bài 24: Khái quát về vi điều khiển",
+                content: `<div class="box-definition"><strong>Vi điều khiển (Microcontroller):</strong> Là một vi xử lý máy tính thu nhỏ được đóng gói tích hợp trên một chip vi mạch bán dẫn. Bên trong chứa CPU bộ trung tâm, bộ nhớ Flash/RAM và các module ngoại vi vào/ra (I/O).</div>
+                          <p>Vi điều khiển nhận lệnh lập trình phần mềm để làm bộ não điều khiển toàn bộ hệ thống cơ điện tử thông minh xung quanh.</p>`
+            },
+            {
+                title: "Bài 25: Bo mạch lập trình vi điều khiển",
+                content: `<p>Tìm hiểu các hệ sinh thái bo mạch phát triển phần cứng mã nguồn mở phổ biến: tiêu biểu là <strong>Arduino Uno R3</strong> dựa trên chip AVR.</p>
+                          <div class="box-summary">Bo mạch tích hợp sẵn khối chuyển đổi giao tiếp UART-USB, mạch IC ổn áp nguồn, hệ thống hàng chân cắm tín hiệu giúp đơn giản hóa quá trình kết nối thử nghiệm linh kiện ngoại vi mà không cần hàn mạch cứng.</div>`
+            },
+            {
+                title: "Bài 26: Thực hành: Thiết kế, lắp ráp, kiểm tra mạch tự động điều chỉnh cường độ sáng của LED theo môi trường xung quanh",
+                content: `<p><strong>Quy trình nguyên lý vận hành của hệ thống tự động:</strong></p>
+                          <ol>
+                            <li>Vi điều khiển liên tục đọc giá trị điện áp Analog từ mạch phân áp sử dụng quang trở (LDR) cảm ứng cường độ sáng môi trường.</li>
+                            <li>Khối ADC nội tại của chip dịch tín hiệu thành các con số kỹ thuật số.</li>
+                            <li>Chương trình Code nhúng xử lý so sánh: Nếu trời tối, chip tự động xuất xung mã hóa **PWM (Điều chế độ rộng xung)** tăng dòng để làm đèn LED sáng mạnh lên và ngược lại.</li>
+                          </ol>`
+            }
+        ];
+
+        // LOGIC HỆ THỐNG ĐĂNG NHẬP & XỬ LÝ ỨNG DỤNG
         function login() {
             const name = document.getElementById('stu-name').value;
             const code = document.getElementById('access-code').value;
@@ -198,7 +386,7 @@
 
             document.getElementById('menu-list').innerHTML = data.map((l, i) => `
                 <div class="menu-item" id="menu-item-${i}" onclick="showLesson(${i})">
-                    ${i + 1}. ${l.title}
+                    ${l.title}
                 </div>
             `).join('');
             showLesson(0);
@@ -210,7 +398,6 @@
             if (!data[index]) return;
             const lesson = data[index];
             
-            // Cập nhật nội dung & thêm khoảng trống cuối để không bị che
             document.getElementById('display').innerHTML = `
                 <h1>${lesson.title}</h1>
                 <div class="article-body">${lesson.content}</div>
@@ -225,7 +412,6 @@
             const activeItem = document.getElementById(`menu-item-${index}`);
             if (activeItem) activeItem.classList.add('active');
             
-            // Cuộn lên đầu
             document.getElementById('main-view').scrollTo(0, 0);
         }
 
@@ -243,4 +429,3 @@
     </script>
 </body>
 </html>
-
