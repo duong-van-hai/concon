@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-TECH PRO | Modern Learning System</title>
+    <title> D&H.COM | Modern Learning System</title>
     
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8PH15MNTJ6"></script>
     <script>
@@ -16,6 +16,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     
+    <!-- TÍCH HỢP KATEX: Thư viện render công thức Toán/Lý siêu tốc giúp sửa lỗi hiển thị chữ thô -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex/contrib/auto-render.min.js" onload="renderMathInBody(document.body);"></script>
+
     <style>
         :root {
             --primary: #4f46e5;
@@ -105,7 +110,9 @@
         body.presentation-mode #main-view { padding: 0; background: white; }
         body.presentation-mode .content-card { max-width: 100%; width: 100vw; height: 100vh; border-radius: 0; padding: 80px 12%; box-shadow: none; overflow-y: auto; }
         body.presentation-mode h1 { font-size: 4rem; text-align: center; }
-        body.presentation-mode p, body.presentation-mode li, body.presentation-mode td { font-size: 2.3rem; line-height: 1.5; }
+        body.presentation-mode p, body.presentation-mode li, body.presentation-mode td, body.presentation-mode .box-definition, body.presentation-mode .box-warning, body.presentation-mode .box-summary { font-size: 2.3rem; line-height: 1.5; }
+        /* Đồng bộ kích thước chữ toán học KaTeX khi ở chế độ phóng to trình chiếu */
+        body.presentation-mode .katex { font-size: 2.5rem !important; }
 
         /* LOGIN */
         #login-box { position: fixed; inset: 0; background: #f8fafc; z-index: 9999; display: flex; align-items: center; justify-content: center; }
@@ -151,7 +158,6 @@
         </div>
     </div>
 
-    <!-- Giả lập dữ liệu lớp 10 và lớp 11 để tránh lỗi hệ thống khi chọn lớp -->
     <script>
         const data10 = [
             { title: "Bài 1: Công nghệ và đời sống", content: "<p>Nội dung bài học lớp 10 đang được cập nhật...</p>" }
@@ -161,13 +167,11 @@
         ];
     </script>
 
-    <!-- Kịch bản chính chứa dữ liệu lớp 12 và toàn bộ Logic hệ thống -->
     <script>
         let currentIndex = 0;
         let currentGrade = "12";
         const MASTER_CODE = "CN2026";
 
-        // DỮ LIỆU TOÀN BỘ CHƯƠNG TRÌNH CÔNG NGHỆ 12
         const data12 = [
             // PHẦN MỘT: CÔNG NGHỆ ĐIỆN
             {
@@ -193,7 +197,7 @@
                           <ul>
                             <li><strong>Nối hình sao (Y):</strong> Dòng điện dây bằng dòng điện pha ($I_d = I_p$), điện áp dây bằng căn 3 lần điện áp pha ($U_d = \\sqrt{3}U_p$).</li>
                             <li><strong>Nối hình tam giác (Δ):</strong> Điện áp dây bằng điện áp pha ($U_d = U_p$), dòng điện dây bằng căn 3 lần dòng điện pha ($I_d = \\sqrt{3}I_p$).</li>
-                          </ul>
+                          </table>
                           <div class="box-warning"><strong>Cảnh báo:</strong> Cần đấu nối đúng tải theo quy định điện áp định mức để tránh nguy cơ sụt áp hoặc cháy cuộn dây thiết bị.</div>`
             },
             {
@@ -353,7 +357,6 @@
             }
         ];
 
-        // LOGIC HỆ THỐNG ĐĂNG NHẬP & XỬ LÝ ỨNG DỤNG
         function login() {
             const name = document.getElementById('stu-name').value;
             const code = document.getElementById('access-code').value;
@@ -413,6 +416,11 @@
             if (activeItem) activeItem.classList.add('active');
             
             document.getElementById('main-view').scrollTo(0, 0);
+
+            // GỌI LỆNH RE-RENDER TOÁN HỌC: Cực kỳ quan trọng để quét và hiển thị công thức sau khi đổi bài học
+            if (typeof renderMathInBody === "function") {
+                renderMathInBody(document.getElementById('display'));
+            }
         }
 
         function changeLesson(step) { showLesson(currentIndex + step); }
